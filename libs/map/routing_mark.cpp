@@ -44,7 +44,6 @@ float constexpr kSpeedCameraOutlineWidth = 2.0f;
 int constexpr kMinSpeedCameraZoom = 13;
 int constexpr kMinSpeedCameraTitleZoom = 13;
 int constexpr kMinFixedSpeedCameraZoom = 12;
-int constexpr kMediumFixedSpeedCameraZoom = 15;
 
 // RouteAltMark constants — ETA balloon (rounded rect) drawn on each route variant. Sized to be
 // legible at typical zoom levels; white background with dark text for readability over the route line.
@@ -700,8 +699,7 @@ FixedSpeedCameraMark::FixedSpeedCameraMark(m2::PointD const & ptOrg) : UserMark(
 drape_ptr<df::UserPointMark::SymbolNameZoomInfo> FixedSpeedCameraMark::GetSymbolNames() const
 {
   auto symbols = make_unique_dp<SymbolNameZoomInfo>();
-  symbols->emplace(kMinFixedSpeedCameraZoom, "speedcam-s");
-  symbols->emplace(kMediumFixedSpeedCameraZoom, "speedcam-m");
+  symbols->emplace(kMinFixedSpeedCameraZoom, "speedcam-m");
   return symbols;
 }
 

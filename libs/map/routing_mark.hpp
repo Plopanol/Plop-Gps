@@ -213,7 +213,6 @@ public:
   void SetMaxSpeedKmph(uint8_t maxSpeedKmph) { m_maxSpeedKmph = maxSpeedKmph; }
   uint8_t GetMaxSpeedKmph() const { return m_maxSpeedKmph; }
 
-  bool SymbolIsPOI() const override { return true; }
   drape_ptr<SymbolNameZoomInfo> GetSymbolNames() const override;
   int GetMinZoom() const override;
 
