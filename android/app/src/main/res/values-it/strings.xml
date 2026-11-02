@@ -763,6 +763,12 @@
     <string name="enable_keep_screen_on">Tieni lo schermo acceso</string>
     <!-- Description in preferences -->
     <string name="enable_keep_screen_on_description">Se abilitato, lo schermo sarà sempre acceso quando si visualizza la mappa.</string>
+    <!-- Preference to show the currently playing music track during navigation -->
+    <string name="enable_now_playing">Mostra la musica in riproduzione</string>
+    <!-- Description in preferences -->
+    <string name="enable_now_playing_description">Mostra il titolo del brano riprodotto da un\'altra app durante la navigazione.</string>
+    <!-- Preference summary when notification access needed to read the playing track is not granted -->
+    <string name="now_playing_permission_required">È necessario l\'accesso alle notifiche. Tocca per concederlo.</string>
     <!-- A preference title; keep short! -->
     <string name="enable_show_on_lock_screen">Mostra sulla schermata di blocco</string>
     <!-- Description in preferences -->

@@ -764,6 +764,12 @@
     <string name="enable_keep_screen_on">Mantener pantalla encendida</string>
     <!-- Description in preferences -->
     <string name="enable_keep_screen_on_description">Si se activa, la pantalla permanecerá encendida al mostrar el mapa.</string>
+    <!-- Preference to show the currently playing music track during navigation -->
+    <string name="enable_now_playing">Mostrar la música en reproducción</string>
+    <!-- Description in preferences -->
+    <string name="enable_now_playing_description">Muestra el título de la canción que reproduce otra aplicación durante la navegación.</string>
+    <!-- Preference summary when notification access needed to read the playing track is not granted -->
+    <string name="now_playing_permission_required">Se necesita acceso a las notificaciones. Toca para concederlo.</string>
     <!-- A preference title; keep short! -->
     <string name="enable_show_on_lock_screen">Mostrar en la pantalla de bloqueo</string>
     <!-- Description in preferences -->

@@ -757,6 +757,12 @@
     <string name="enable_keep_screen_on">Keep the screen on</string>
     <!-- Description in preferences -->
     <string name="enable_keep_screen_on_description">When enabled, the screen will always be on when displaying the map.</string>
+    <!-- Preference to show the currently playing music track during navigation -->
+    <string name="enable_now_playing">Show music playing</string>
+    <!-- Description in preferences -->
+    <string name="enable_now_playing_description">Shows the title of the track played by another app during navigation.</string>
+    <!-- Preference summary when notification access needed to read the playing track is not granted -->
+    <string name="now_playing_permission_required">Notification access is required. Tap to grant it.</string>
     <!-- A preference title; keep short! -->
     <string name="enable_show_on_lock_screen">Show on the lock screen</string>
     <!-- Description in preferences -->

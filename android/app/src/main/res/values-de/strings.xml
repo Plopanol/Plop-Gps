@@ -759,6 +759,12 @@
     <string name="enable_keep_screen_on">Bildschirm anlassen</string>
     <!-- Description in preferences -->
     <string name="enable_keep_screen_on_description">Wenn diese Option aktiviert ist, bleibt der Bildschirm bei der Anzeige der Karte immer eingeschaltet.</string>
+    <!-- Preference to show the currently playing music track during navigation -->
+    <string name="enable_now_playing">Laufende Musik anzeigen</string>
+    <!-- Description in preferences -->
+    <string name="enable_now_playing_description">Zeigt während der Navigation den Titel des von einer anderen App abgespielten Musikstücks an.</string>
+    <!-- Preference summary when notification access needed to read the playing track is not granted -->
+    <string name="now_playing_permission_required">Zugriff auf Benachrichtigungen erforderlich. Tippen, um ihn zu erteilen.</string>
     <!-- A preference title; keep short! -->
     <string name="enable_show_on_lock_screen">Auf dem Sperrbildschirm anzeigen</string>
     <!-- Description in preferences -->

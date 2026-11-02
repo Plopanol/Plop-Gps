@@ -762,6 +762,12 @@
     <string name="enable_keep_screen_on">Laisser l\'écran allumé</string>
     <!-- Description in preferences -->
     <string name="enable_keep_screen_on_description">Lorsque cette option est activée, l\'écran sera toujours allumé lors de l\'affichage de la carte.</string>
+    <!-- Preference to show the currently playing music track during navigation -->
+    <string name="enable_now_playing">Afficher la musique en cours</string>
+    <!-- Description in preferences -->
+    <string name="enable_now_playing_description">Affiche le titre du morceau joué par une autre application pendant la navigation.</string>
+    <!-- Preference summary when notification access needed to read the playing track is not granted -->
+    <string name="now_playing_permission_required">L\'accès aux notifications est requis. Touchez pour l\'accorder.</string>
     <!-- A preference title; keep short! -->
     <string name="enable_show_on_lock_screen">Afficher sur l\'écran de verrouillage</string>
     <!-- Description in preferences -->
