@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1420" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c05621"/>
+    </marker>
+    <style>
+      .box { fill: #ebf4ff; stroke: #3182ce; stroke-width: 1.5; }
+      .core { fill: #e6fffa; stroke: #2c7a7b; stroke-width: 1.5; }
+      .nav { fill: #f0fff4; stroke: #38a169; stroke-width: 1.5; }
+      .opt { fill: #fffaf0; stroke: #dd6b20; stroke-width: 1.2; stroke-dasharray: 5 3; }
+      .dec { fill: #faf5ff; stroke: #805ad5; stroke-width: 1.5; }
+      .t { fill: #1a202c; font-weight: 600; font-size: 14px; }
+      .s { fill: #2d3748; }
+      .f { fill: #718096; font-family: Consolas, monospace; font-size: 11px; }
+      .o { fill: #9c4221; font-size: 12px; }
+      .ot { fill: #c05621; font-weight: 600; font-size: 12px; }
+      .flow { stroke: #4a5568; stroke-width: 1.6; fill: none; marker-end: url(#arr); }
+      .oflow { stroke: #c05621; stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; marker-end: url(#arrO); }
+    </style>
+  </defs>
+
+  <rect width="1100" height="1420" fill="#ffffff"/>
+  <text x="30" y="40" font-size="22" font-weight="700" fill="#1a202c">Calcul d'itinéraire — Organic Maps</text>
+  <text x="30" y="62" class="s">Pipeline (gauche) et leviers de réglage (droite, en orange). Tout est calculé localement à partir des .mwm.</text>
+
+  <!-- Legend -->
+  <rect x="700" y="80" width="14" height="14" class="box"/><text x="720" y="92" class="s">Étape</text>
+  <rect x="780" y="80" width="14" height="14" class="core"/><text x="800" y="92" class="s">Calcul du coût</text>
+  <rect x="910" y="80" width="14" height="14" class="opt"/><text x="930" y="92" class="s">Levier modifiable</text>
+
+  <!-- 1 Request -->
+  <rect x="30" y="110" width="520" height="62" rx="8" class="box"/>
+  <text x="45" y="133" class="t">1. Demande d'itinéraire</text>
+  <text x="45" y="152" class="s">Départ, étapes, arrivée, type de véhicule (voiture / vélo / piéton / TC)</text>
+  <text x="45" y="166" class="f">map/routing_manager.cpp → routing/async_router.cpp (thread)</text>
+
+  <rect x="620" y="110" width="450" height="62" rx="8" class="opt"/>
+  <text x="635" y="132" class="ot">Optimiser l'ordre des étapes</text>
+  <text x="635" y="150" class="o">Réglage « RouteOptimizationEnabled » (Android : DrivingOptions)</text>
+  <text x="635" y="165" class="f">routing_options.cpp</text>
+  <path d="M620,141 L552,141" class="oflow"/>
+
+  <path d="M290,172 L290,200" class="flow"/>
+
+  <!-- 2 Options -->
+  <rect x="30" y="200" width="520" height="62" rx="8" class="box"/>
+  <text x="45" y="223" class="t">2. Chargement des options « éviter »</text>
+  <text x="45" y="242" class="s">Routes exclues du graphe (pas une pénalité : interdites)</text>
+  <text x="45" y="256" class="f">RoutingOptions::LoadFromSettings — IndexRouter::CalculateRoute</text>
+
+  <rect x="620" y="200" width="450" height="62" rx="8" class="opt"/>
+  <text x="635" y="222" class="ot">Péages · Autoroutes · Ferries · Chemins · Escaliers</text>
+  <text x="635" y="240" class="o">Réglages utilisateur ; tag OSM → option dans RoutingOptionsClassifier</text>
+  <text x="635" y="255" class="f">routing_options.hpp (enum Road)</text>
+  <path d="M620,231 L552,231" class="oflow"/>
+
+  <path d="M290,262 L290,290" class="flow"/>
+
+  <!-- 3 Snapping -->
+  <rect x="30" y="290" width="520" height="62" rx="8" class="box"/>
+  <text x="45" y="313" class="t">3. Recalage des points sur la route</text>
+  <text x="45" y="332" class="s">Arêtes proches, même direction (voiture), sans impasses</text>
+  <text x="45" y="346" class="f">IndexRouter::PointsOnEdgesSnapping</text>
+
+  <rect x="620" y="290" width="450" height="62" rx="8" class="opt"/>
+  <text x="635" y="312" class="ot">Candidats / direction de départ</text>
+  <text x="635" y="330" class="o">kMaxRoadCandidates=10, m_useDirectionForRouteBuilding</text>
+  <text x="635" y="345" class="f">index_router.cpp, routing_settings.cpp</text>
+  <path d="M620,321 L552,321" class="oflow"/>
+
+  <path d="M290,352 L290,380" class="flow"/>
+
+  <!-- 4 Mode decision -->
+  <polygon points="290,380 520,425 290,470 60,425" class="dec"/>
+  <text x="290" y="418" text-anchor="middle" class="t">4. Mode du graphe</text>
+  <text x="290" y="436" text-anchor="middle" class="s">Voiture et cartes éloignées (&gt; 300 km) ?</text>
+  <text x="290" y="452" text-anchor="middle" class="f">SetupAlgorithmMode</text>
+
+  <path d="M60,425 L40,425 L40,520" class="flow"/>
+  <text x="44" y="500" class="s" font-weight="600">oui</text>
+  <path d="M520,425 L540,425 L540,520" class="flow"/>
+  <text x="500" y="500" class="s" font-weight="600">non</text>
+
+  <rect x="30" y="520" width="250" height="70" rx="8" class="box"/>
+  <text x="45" y="542" class="t">LeapsOnly</text>
+  <text x="45" y="560" class="s">Sauts entre frontières de cartes,</text>
+  <text x="45" y="575" class="s">poids pré-calculés (générateur)</text>
+
+  <rect x="300" y="520" width="250" height="70" rx="8" class="box"/>
+  <text x="315" y="542" class="t">Joints / NoLeaps</text>
+  <text x="315" y="560" class="s">Graphe routier complet</text>
+  <text x="315" y="575" class="s">(intersections compressées)</text>
+
+  <rect x="620" y="400" width="450" height="62" rx="8" class="opt"/>
+  <text x="635" y="422" class="ot">Seuil « cartes proches »</text>
+  <text x="635" y="440" class="o">kCloseMwmPointsDistanceM = 300 km. Leaps : régénérer les mwm</text>
+  <text x="635" y="455" class="o">pour que les nouveaux coefficients s'appliquent aux sauts.</text>
+  <path d="M620,431 L522,428" class="oflow"/>
+
+  <path d="M155,590 L155,615 L290,615 L290,640" class="flow"/>
+  <path d="M425,590 L425,615 L290,615" stroke="#4a5568" stroke-width="1.6" fill="none"/>
+
+  <!-- 5 A* + cost -->
+  <rect x="30" y="640" width="520" height="290" rx="10" class="core"/>
+  <text x="45" y="664" class="t">5. Recherche A* bidirectionnelle — minimise un poids en secondes</text>
+  <text x="45" y="682" class="f">routing/base/astar_algorithm.hpp · heuristique = distance / vitesse max</text>
+
+  <rect x="50" y="696" width="480" height="104" rx="6" fill="#ffffff" stroke="#2c7a7b"/>
+  <text x="62" y="716" class="t" font-size="13">a) Vitesse du tronçon</text>
+  <text x="62" y="734" class="s">maxspeed OSM  sinon  vitesse par défaut (type de route, ville/hors ville)</text>
+  <text x="62" y="752" class="s">× facteur type de route  × facteur revêtement</text>
+  <text x="62" y="770" class="s">(+ pente pour vélo/piéton)</text>
+  <text x="62" y="790" class="f">routing_common/vehicle_model.cpp GetTypeSpeedImpl</text>
+
+  <rect x="50" y="808" width="480" height="52" rx="6" fill="#ffffff" stroke="#2c7a7b"/>
+  <text x="62" y="828" class="t" font-size="13">b) Poids = distance / vitesse × trafic</text>
+  <text x="62" y="848" class="f">edge_estimator.cpp CarEstimator::CalcSegmentWeight</text>
+
+  <rect x="50" y="868" width="480" height="52" rx="6" fill="#ffffff" stroke="#2c7a7b"/>
+  <text x="62" y="888" class="t" font-size="13">c) + pénalités de transition entre tronçons</text>
+  <text x="62" y="906" class="s">demi-tour, ferry, zone no-through, accès privé, restrictions</text>
+
+  <!-- options for cost -->
+  <rect x="620" y="500" width="450" height="96" rx="8" class="opt"/>
+  <text x="635" y="522" class="ot">Vitesses et préférences par type de route</text>
+  <text x="635" y="540" class="o">kHighwayBasedSpeeds (km/h) · kHighwayBasedFactors</text>
+  <text x="635" y="556" class="o">Toucher seulement « weight » = change le choix sans fausser l'ETA</text>
+  <text x="635" y="572" class="o">Ex. motorway 0.95 · primary 0.85 · tertiary 0.70 · residential 0.70</text>
+  <text x="635" y="588" class="f">routing_common/car_model_coefs.hpp</text>
+  <path d="M620,560 Q580,700 532,740" class="oflow"/>
+
+  <rect x="620" y="612" width="450" height="62" rx="8" class="opt"/>
+  <text x="635" y="634" class="ot">Revêtement</text>
+  <text x="635" y="652" class="o">kCarSurface : bon 1.0 · mauvais 0.6 · non revêtu 0.4 / 0.2</text>
+  <text x="635" y="667" class="f">routing_common/car_model.cpp</text>
+  <path d="M620,650 L532,752" class="oflow"/>
+
+  <rect x="620" y="690" width="450" height="62" rx="8" class="opt"/>
+  <text x="635" y="712" class="ot">Trafic</text>
+  <text x="635" y="730" class="o">CalcTrafficFactor, ×1.8 si embouteillage, ×10 000 si bloqué</text>
+  <text x="635" y="745" class="f">edge_estimator.cpp</text>
+  <path d="M620,721 L532,834" class="oflow"/>
+
+  <rect x="620" y="768" width="450" height="162" rx="8" class="opt"/>
+  <text x="635" y="790" class="ot">Pénalités (voiture)</text>
+  <text x="635" y="809" class="o">Demi-tour : 120 s — GetUTurnPenalty</text>
+  <text x="635" y="827" class="o">Embarquement ferry : 20 min — GetFerryLandingPenalty</text>
+  <text x="635" y="845" class="o">Traverser une zone no-through : 30 min — s_PassThroughPenaltyS</text>
+  <text x="635" y="863" class="o">Entrer en accès privé/destination : 2 h — s_AccessPenaltyS</text>
+  <text x="635" y="881" class="o">Pénaliser une option au lieu de l'exclure : à ajouter</text>
+  <text x="635" y="897" class="o">dans CalcSegmentWeight via road.GetRoutingOptions()</text>
+  <text x="635" y="917" class="f">edge_estimator.cpp · route_weight.cpp · index_graph.cpp</text>
+  <path d="M620,860 L532,894" class="oflow"/>
+
+  <path d="M290,930 L290,960" class="flow"/>
+
+  <!-- 6 Alternative -->
+  <rect x="30" y="960" width="520" height="80" rx="8" class="box"/>
+  <text x="45" y="983" class="t">6. Itinéraire alternatif (2ᵉ A*)</text>
+  <text x="45" y="1002" class="s">Autre stratégie : Normal ↔ DistanceBiased (« plus court raisonnable »)</text>
+  <text x="45" y="1019" class="s">Routes ≥ plafond comptées à la distance ; routes lentes inchangées</text>
+  <text x="45" y="1034" class="f">IndexRouter::CalculateRoute · EdgeEstimator::Strategy</text>
+
+  <rect x="620" y="950" width="450" height="100" rx="8" class="opt"/>
+  <text x="635" y="972" class="ot">Réglages de l'alternative</text>
+  <text x="635" y="990" class="o">Plafond kDistanceBiasCapSpeedKMpH : voiture 40, vélo 12, piéton 4</text>
+  <text x="635" y="1008" class="o">Affichée si ETA ≤ 1.5 × principale (kMaxAltEtaRatio)</text>
+  <text x="635" y="1026" class="o">Calculée si trajet ≤ 300 km voiture / 100 km (altMaxDistanceM)</text>
+  <text x="635" y="1042" class="f">edge_estimator.cpp · index_router.cpp</text>
+  <path d="M620,1000 L552,1000" class="oflow"/>
+
+  <path d="M290,1040 L290,1070" class="flow"/>
+
+  <!-- 7 Redress -->
+  <rect x="30" y="1070" width="520" height="62" rx="8" class="box"/>
+  <text x="45" y="1093" class="t">7. Reconstruction + instructions</text>
+  <text x="45" y="1112" class="s">Géométrie, ETA, noms, radars, virages, voies, annonces vocales</text>
+  <text x="45" y="1126" class="f">RedressRoute · turns_generator.cpp · car_directions.cpp</text>
+
+  <path d="M290,1132 L290,1160" class="flow"/>
+
+  <!-- 8 Navigation -->
+  <rect x="30" y="1160" width="520" height="80" rx="8" class="nav"/>
+  <text x="45" y="1183" class="t">8. Suivi de navigation</text>
+  <text x="45" y="1202" class="s">Compteur d'éloignement (+1 lent, +2 si ≥ 3 km/h) ; &gt; 10 → recalcul</text>
+  <text x="45" y="1219" class="s">≤ 5 km de la route et ≥ 10 km de l'arrivée → ajustement, sinon complet</text>
+  <text x="45" y="1234" class="f">routing_session.cpp · IndexRouter::AdjustRoute</text>
+
+  <rect x="620" y="1160" width="450" height="80" rx="8" class="opt"/>
+  <text x="635" y="1182" class="ot">Réactivité du recalcul</text>
+  <text x="635" y="1200" class="o">kOnRouteMissedCount · m_matchingThresholdM (voiture 50 m)</text>
+  <text x="635" y="1218" class="o">kAdjustRangeM = 5 km · kMinDistanceToFinishM = 10 km</text>
+  <text x="635" y="1233" class="f">routing_session.cpp · routing_settings.cpp · index_router.cpp</text>
+  <path d="M620,1200 L552,1200" class="oflow"/>
+
+  <!-- loop back -->
+  <path d="M30,1200 L12,1200 L12,290 L28,290" class="flow"/>
+  <text x="16" y="760" class="f" transform="rotate(-90 16 760)">recalcul (retour à l'étape 3)</text>
+
+  <!-- footer -->
+  <rect x="30" y="1270" width="1040" height="120" rx="8" fill="#f7fafc" stroke="#cbd5e0"/>
+  <text x="45" y="1294" class="t">Précautions</text>
+  <text x="45" y="1314" class="s">• Ne jamais rendre un poids inférieur à distance / vitesse max : l'heuristique A* ne serait plus admissible (chemin non optimal).</text>
+  <text x="45" y="1334" class="s">• Weight (choix du chemin) et ETA (durée affichée) sont séparés : régler la préférence via « weight » uniquement.</text>
+  <text x="45" y="1354" class="s">• Long trajet voiture (LeapsOnly) : les poids entre cartes viennent du générateur → régénérer les .mwm.</text>
+  <text x="45" y="1374" class="s">• Relancer routing_tests et routing_integration_tests (ex. *_KeepMotorway) après chaque réglage.</text>
+</svg>
