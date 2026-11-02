@@ -37287,6 +37287,33 @@ vi = Khi được bật, màn hình sẽ luôn sáng khi hiển thị bản đ�
 zh-Hans = 启用后，显示地图时屏幕将始终打开。
 zh-Hant = 啟用後，顯示地圖時畫面將始終開啟。
 
+[enable_now_playing]
+comment = Preference to show the currently playing music track during navigation
+tags = android-app
+en = Show music playing
+de = Laufende Musik anzeigen
+es = Mostrar la música en reproducción
+fr = Afficher la musique en cours
+it = Mostra la musica in riproduzione
+
+[enable_now_playing_description]
+comment = Description in preferences
+tags = android-app
+en = Shows the title of the track played by another app during navigation.
+de = Zeigt während der Navigation den Titel des von einer anderen App abgespielten Musikstücks an.
+es = Muestra el título de la canción que reproduce otra aplicación durante la navegación.
+fr = Affiche le titre du morceau joué par une autre application pendant la navigation.
+it = Mostra il titolo del brano riprodotto da un'altra app durante la navigazione.
+
+[now_playing_permission_required]
+comment = Preference summary when notification access needed to read the playing track is not granted
+tags = android-app
+en = Notification access is required. Tap to grant it.
+de = Zugriff auf Benachrichtigungen erforderlich. Tippen, um ihn zu erteilen.
+es = Se necesita acceso a las notificaciones. Toca para concederlo.
+fr = L'accès aux notifications est requis. Touchez pour l'accorder.
+it = È necessario l'accesso alle notifiche. Tocca per concederlo.
+
 [enable_show_on_lock_screen]
 comment = A preference title; keep short!
 tags = android-app
