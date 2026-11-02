@@ -18,10 +18,12 @@ import androidx.lifecycle.ViewModelProvider;
 import app.organicmaps.MwmApplication;
 import app.organicmaps.R;
 import app.organicmaps.maplayer.MapButtonsViewModel;
+import app.organicmaps.media.NowPlayingTracker;
 import app.organicmaps.sdk.Router;
 import app.organicmaps.sdk.maplayer.traffic.TrafficManager;
 import app.organicmaps.sdk.routing.RoutingController;
 import app.organicmaps.sdk.routing.RoutingInfo;
+import app.organicmaps.sdk.util.Config;
 import app.organicmaps.sdk.util.StringUtils;
 import app.organicmaps.sdk.widget.roadshield.RoadShieldUtils;
 import app.organicmaps.sdk.widgets.lanes.LanesView;
@@ -56,6 +58,10 @@ public class NavigationController implements TrafficManager.TrafficCallback, Nav
   private final View mNextTurnContainer;
 
   private final NavMenu mNavMenu;
+
+  @NonNull
+  private final NowPlayingTracker mNowPlayingTracker;
+  private boolean mStarted;
   View.OnClickListener mOnSettingsClickListener;
   View.OnClickListener mOnVoiceSettingsClickListener;
 
@@ -87,6 +93,12 @@ public class NavigationController implements TrafficManager.TrafficCallback, Nav
     mLanesView = mTopFrame.findViewById(R.id.lanes);
 
     mSpeedLimit = mTopFrame.findViewById(R.id.nav_speed_limit);
+
+    final TextView nowPlaying = mFrame.findViewById(R.id.nav_now_playing);
+    mNowPlayingTracker = new NowPlayingTracker(activity, text -> {
+      nowPlaying.setText(text);
+      UiUtils.showIf(text != null, nowPlaying);
+    });
 
     // Blank rectangle below the navbar that hides menu content behind it.
     final View navigationBarBackground = mFrame.findViewById(R.id.nav_bottom_sheet_nav_bar);
@@ -205,6 +217,27 @@ public class NavigationController implements TrafficManager.TrafficCallback, Nav
     UiUtils.showIf(show, mFrame);
     if (!show)
       mMapButtonsViewModel.setTopHeaderHeight(0);
+    updateNowPlayingTracker();
+  }
+
+  public void onStart()
+  {
+    mStarted = true;
+    updateNowPlayingTracker();
+  }
+
+  public void onStop()
+  {
+    mStarted = false;
+    updateNowPlayingTracker();
+  }
+
+  private void updateNowPlayingTracker()
+  {
+    if (mStarted && UiUtils.isVisible(mFrame) && Config.isNowPlayingEnabled())
+      mNowPlayingTracker.start();
+    else
+      mNowPlayingTracker.stop();
   }
 
   public boolean isNavMenuCollapsed()

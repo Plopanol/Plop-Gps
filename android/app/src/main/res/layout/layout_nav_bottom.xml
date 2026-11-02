@@ -19,6 +19,22 @@
     android:focusable="true">
 
     <include layout="@layout/bottom_sheet_handle" />
+
+    <TextView
+      android:id="@+id/nav_now_playing"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/nav_bottom_gap"
+      android:drawablePadding="@dimen/margin_quarter"
+      android:ellipsize="end"
+      android:gravity="center"
+      android:maxLines="1"
+      android:textAppearance="@style/MwmTextAppearance.Body3"
+      android:visibility="gone"
+      app:drawableStartCompat="@drawable/ic_music_note"
+      app:drawableTint="?iconTint"
+      tools:text="Bohemian Rhapsody — Queen"
+      tools:visibility="visible" />
     <include layout="@layout/layout_nav_bottom_numbers" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

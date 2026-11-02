@@ -19,6 +19,7 @@ import app.organicmaps.downloader.OnmapDownloader;
 import app.organicmaps.editor.LanguagesFragment;
 import app.organicmaps.editor.ProfileActivity;
 import app.organicmaps.help.HelpActivity;
+import app.organicmaps.media.NowPlayingTracker;
 import app.organicmaps.sdk.Framework;
 import app.organicmaps.sdk.Router;
 import app.organicmaps.sdk.downloader.MapManager;
@@ -74,6 +75,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
     initSearchPrivacyPrefsCallbacks();
     initBookmarksBackupPrefsCallbacks();
     initScreenSleepEnabledPrefsCallbacks();
+    initNowPlayingPrefsCallbacks();
     initShowOnLockScreenPrefsCallbacks();
     initNightNavigationPrefsCallbacks();
   }
@@ -121,6 +123,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
     updateVoiceInstructionsPrefsSummary();
     updateRoutingSettingsPrefsSummary();
     updateMapLanguageCodeSummary();
+    updateNowPlayingPrefsSummary();
   }
 
   @Override
@@ -559,6 +562,44 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
       }
       return true;
     });
+  }
+
+  private void initNowPlayingPrefsCallbacks()
+  {
+    final Preference pref = getPreference(getString(R.string.pref_now_playing));
+
+    ((TwoStatePreference) pref).setChecked(Config.isNowPlayingEnabled());
+    pref.setOnPreferenceChangeListener((preference, newValue) -> {
+      final boolean enabled = (Boolean) newValue;
+      Config.setNowPlayingEnabled(enabled);
+      NowPlayingTracker.setListenerEnabled(requireContext(), enabled);
+      return true;
+    });
+    pref.setOnPreferenceClickListener(preference -> {
+      // Called after the switch is toggled.
+      if (Config.isNowPlayingEnabled() && !NowPlayingTracker.isAccessGranted(requireContext()))
+        openNotificationListenerSettings();
+      return false;
+    });
+  }
+
+  private void updateNowPlayingPrefsSummary()
+  {
+    final Preference pref = getPreference(getString(R.string.pref_now_playing));
+    final boolean missingAccess = Config.isNowPlayingEnabled() && !NowPlayingTracker.isAccessGranted(requireContext());
+    pref.setSummary(missingAccess ? R.string.now_playing_permission_required : R.string.enable_now_playing_description);
+  }
+
+  private void openNotificationListenerSettings()
+  {
+    try
+    {
+      startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+    }
+    catch (ActivityNotFoundException e)
+    {
+      startActivity(new Intent(Settings.ACTION_SETTINGS));
+    }
   }
 
   private void initShowOnLockScreenPrefsCallbacks()

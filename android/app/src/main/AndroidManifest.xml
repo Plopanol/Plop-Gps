@@ -551,6 +551,17 @@
       android:stopWithTask="false"
       />
 
+    <!-- Enabled only when the "now playing" preference is on, see NowPlayingTracker. -->
+    <service android:name=".media.NowPlayingListenerService"
+      android:enabled="false"
+      android:exported="true"
+      android:label="@string/enable_now_playing"
+      android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+      <intent-filter>
+        <action android:name="android.service.notification.NotificationListenerService" />
+      </intent-filter>
+    </service>
+
     <activity
       android:name=".widget.TrackRecordingStartActivity"
       android:excludeFromRecents="true"
