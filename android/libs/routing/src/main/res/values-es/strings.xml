@@ -42,6 +42,8 @@
     <string name="speed_camera_zone_entered">Zona de peligro, límite de velocidad %d km/h</string>
     <!-- Voice alert on entering a danger zone around a fixed speed camera without a known speed limit -->
     <string name="speed_camera_zone_entered_no_limit">Zona de peligro</string>
+    <!-- Voice alert on entering a danger zone around a red light camera -->
+    <string name="speed_camera_zone_red_light">Zona de peligro, semáforo controlado</string>
     <!-- Voice alert on leaving a danger zone around a fixed speed camera -->
     <string name="speed_camera_zone_left">Fin de la zona de peligro</string>
     <string name="ok">Aceptar</string>
