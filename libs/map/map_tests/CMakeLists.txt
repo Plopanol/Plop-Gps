@@ -21,6 +21,7 @@ set(SRC
   raster_tile_provider_tests.cpp
   road_warning_tests.cpp
   share_tests.cpp
+  speed_camera_zones_tests.cpp
   search_api_tests.cpp
   search_mark_lifecycle_tests.cpp
   search_viewport_tests.cpp

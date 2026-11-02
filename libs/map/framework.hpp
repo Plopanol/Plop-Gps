@@ -15,6 +15,7 @@
 #include "map/search_mark.hpp"
 #include "map/selection_processor.hpp"
 #include "map/share.hpp"
+#include "map/speed_camera_zones.hpp"
 #include "map/track.hpp"
 #include "map/track_statistics.hpp"
 #include "map/traffic_manager.hpp"
@@ -192,6 +193,9 @@ protected:
   RoutingManager m_routingManager;
 
   TrafficManager m_trafficManager;
+
+  SpeedCameraZones m_speedCamZones;
+  std::function<void(SpeedCameraZones::Event const &)> m_onSpeedCameraZoneEvent;
 
   /// This function will be called by m_storage when latest local files
   /// is downloaded.
@@ -395,6 +399,11 @@ public:
   /// @name GPS location updates routine.
   void OnLocationError(location::TLocationError error);
   void OnLocationUpdate(location::GpsInfo const & info);
+  /// Called from OnLocationUpdate() when entering or leaving a speed camera danger zone.
+  void SetSpeedCameraZoneListener(std::function<void(SpeedCameraZones::Event const &)> && fn)
+  {
+    m_onSpeedCameraZoneEvent = std::move(fn);
+  }
   void OnCompassUpdate(location::CompassInfo const & info);
   void SwitchMyPositionNextMode();
   /// Should be set before Drape initialization. Guarantees that fn is called in main thread context.

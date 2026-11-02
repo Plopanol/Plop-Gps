@@ -1302,6 +1302,18 @@ JNIEXPORT jint Java_app_organicmaps_sdk_Framework_nativeGetSpeedCamManagerMode(J
   return static_cast<jint>(frm()->GetRoutingManager().GetSpeedCamManager().GetMode());
 }
 
+JNIEXPORT void Java_app_organicmaps_sdk_Framework_nativeSetSpeedCameraZoneListener(JNIEnv * env, jclass,
+                                                                                   jobject listener)
+{
+  frm()->SetSpeedCameraZoneListener([rf = jni::make_global_ref(listener)](SpeedCameraZones::Event const & event)
+  {
+    JNIEnv * jenv = jni::GetEnv();
+    jmethodID const methodId = jni::GetMethodID(jenv, *rf, "onSpeedCameraZoneEvent", "(ZI)V");
+    jenv->CallVoidMethod(*rf, methodId, static_cast<jboolean>(event.m_type == SpeedCameraZones::Event::Type::Entered),
+                         static_cast<jint>(event.m_maxSpeedKmph));
+  });
+}
+
 JNIEXPORT jobject Java_app_organicmaps_sdk_Framework_nativeGetRouteFollowingInfo(JNIEnv * env, jclass)
 {
   RoutingManager & rm = frm()->GetRoutingManager();

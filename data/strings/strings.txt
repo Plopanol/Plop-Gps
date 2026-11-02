@@ -26674,6 +26674,33 @@ vi = Tăn tốc độ máy ảnh
 zh-Hans = 限速拍照
 zh-Hant = 測速照相
 
+[speed_camera_zone_entered]
+comment = Voice alert on entering a danger zone around a fixed speed camera, %d is the speed limit in km/h
+tags = android-libs-routing
+en = Danger zone, speed limit %d km/h
+de = Gefahrenzone, Tempolimit %d km/h
+es = Zona de peligro, límite de velocidad %d km/h
+fr = Zone de danger, vitesse limitée à %d km/h
+it = Zona di pericolo, limite di velocità %d km/h
+
+[speed_camera_zone_entered_no_limit]
+comment = Voice alert on entering a danger zone around a fixed speed camera without a known speed limit
+tags = android-libs-routing
+en = Danger zone
+de = Gefahrenzone
+es = Zona de peligro
+fr = Zone de danger
+it = Zona di pericolo
+
+[speed_camera_zone_left]
+comment = Voice alert on leaving a danger zone around a fixed speed camera
+tags = android-libs-routing
+en = End of danger zone
+de = Ende der Gefahrenzone
+es = Fin de la zona de peligro
+fr = Fin de zone de danger
+it = Fine della zona di pericolo
+
 [place_description_title]
 tags = android-app,apple-maps
 en = Place Description

@@ -20,6 +20,7 @@ import app.organicmaps.sdk.routing.RoutingLoadPointsListener;
 import app.organicmaps.sdk.routing.RoutingProgressListener;
 import app.organicmaps.sdk.routing.RoutingRecommendationListener;
 import app.organicmaps.sdk.routing.TransitRouteInfo;
+import app.organicmaps.sdk.routing.SpeedCameraZoneListener;
 import app.organicmaps.sdk.settings.SpeedCameraMode;
 import app.organicmaps.sdk.widget.placepage.CoordinatesFormatEntry;
 import app.organicmaps.sdk.widget.placepage.RouteInfo;
@@ -259,6 +260,8 @@ public class Framework
   private static native void nativeSetSpeedCamManagerMode(int mode);
 
   public static native void nativeSetRoutingListener(@NonNull RoutingListener listener);
+
+  public static native void nativeSetSpeedCameraZoneListener(@NonNull SpeedCameraZoneListener listener);
 
   public static native void nativeSetRouteProgressListener(@NonNull RoutingProgressListener listener);
 

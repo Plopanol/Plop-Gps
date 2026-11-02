@@ -99,6 +99,7 @@ std::string_view constexpr kAllow3dKey = "Allow3d";
 std::string_view constexpr kAllow3dBuildingsKey = "Buildings3d";
 std::string_view constexpr kAllowAutoZoom = "AutoZoom";
 std::string_view constexpr kTrafficEnabledKey = "TrafficEnabled";
+char constexpr kSpeedCamerasFile[] = "radars_fixes_fr.json";
 std::string_view constexpr kTransitSchemeEnabledKey = "TransitSchemeEnabled";
 std::string_view constexpr kIsolinesEnabledKey = "IsolinesEnabled";
 std::string_view constexpr kOutdoorsEnabledKey = "OutdoorsEnabled";
@@ -232,6 +233,14 @@ void Framework::OnLocationUpdate(GpsInfo const & info)
 #endif
 
   m_routingManager.OnLocationUpdate(rInfo);
+
+  if (m_onSpeedCameraZoneEvent &&
+      m_routingManager.GetSpeedCamManager().GetMode() != routing::SpeedCameraManagerMode::Never)
+  {
+    m_speedCamZones.LoadOnce(kSpeedCamerasFile);
+    if (auto const event = m_speedCamZones.OnLocationUpdate(rInfo))
+      m_onSpeedCameraZoneEvent(*event);
+  }
 }
 
 void Framework::OnCompassUpdate(CompassInfo const & info)

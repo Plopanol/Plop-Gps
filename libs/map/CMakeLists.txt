@@ -39,6 +39,8 @@ set(SRC
   place_page_info.hpp
   share.cpp
   share.hpp
+  speed_camera_zones.cpp
+  speed_camera_zones.hpp
   selection_processor.cpp
   selection_processor.hpp
   relation_track.cpp
