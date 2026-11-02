@@ -38,6 +38,12 @@
     <string name="downloader_update_maps">Karten aktualisieren</string>
     <string name="downloader_mwm_migration_dialog">Um eine Route zu erstellen, musst du alle Karten aktualisieren und dann die Route erneut planen.</string>
     <string name="navigation_stop_button">Beenden</string>
+    <!-- Voice alert on entering a danger zone around a fixed speed camera, %d is the speed limit in km/h -->
+    <string name="speed_camera_zone_entered">Gefahrenzone, Tempolimit %d km/h</string>
+    <!-- Voice alert on entering a danger zone around a fixed speed camera without a known speed limit -->
+    <string name="speed_camera_zone_entered_no_limit">Gefahrenzone</string>
+    <!-- Voice alert on leaving a danger zone around a fixed speed camera -->
+    <string name="speed_camera_zone_left">Ende der Gefahrenzone</string>
     <string name="ok">Ok</string>
 
     <!-- SECTION: Bookmark types used for sorting -->
