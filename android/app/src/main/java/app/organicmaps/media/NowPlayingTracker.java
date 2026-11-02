@@ -2,7 +2,6 @@ package app.organicmaps.media;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
@@ -66,14 +65,6 @@ public class NowPlayingTracker implements MediaSessionManager.OnActiveSessionsCh
   public static boolean isAccessGranted(@NonNull Context context)
   {
     return NotificationManagerCompat.getEnabledListenerPackages(context).contains(context.getPackageName());
-  }
-
-  public static void setListenerEnabled(@NonNull Context context, boolean enabled)
-  {
-    context.getPackageManager().setComponentEnabledSetting(
-        new ComponentName(context, NowPlayingListenerService.class),
-        enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-        PackageManager.DONT_KILL_APP);
   }
 
   public void start()

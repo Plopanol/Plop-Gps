@@ -570,14 +570,12 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
 
     ((TwoStatePreference) pref).setChecked(Config.isNowPlayingEnabled());
     pref.setOnPreferenceChangeListener((preference, newValue) -> {
-      final boolean enabled = (Boolean) newValue;
-      Config.setNowPlayingEnabled(enabled);
-      NowPlayingTracker.setListenerEnabled(requireContext(), enabled);
+      Config.setNowPlayingEnabled((Boolean) newValue);
       return true;
     });
     pref.setOnPreferenceClickListener(preference -> {
-      // Called after the switch is toggled.
-      if (Config.isNowPlayingEnabled() && !NowPlayingTracker.isAccessGranted(requireContext()))
+      // Called after the switch is toggled: let the user grant the access, or revoke it when it is no longer needed.
+      if (Config.isNowPlayingEnabled() != NowPlayingTracker.isAccessGranted(requireContext()))
         openNotificationListenerSettings();
       return false;
     });
