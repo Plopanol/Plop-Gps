@@ -694,6 +694,11 @@ bool Framework::FillUserMarkInfo(UserMark const * mark, place_page::Info & outIn
     FillSpeedCameraMarkInfo(*static_cast<SpeedCameraMark const *>(mark), outInfo);
     break;
   }
+  case UserMark::Type::FIXED_SPEED_CAM:
+  {
+    FillFixedSpeedCameraMarkInfo(*static_cast<FixedSpeedCameraMark const *>(mark), outInfo);
+    break;
+  }
   default: CHECK(false, ("Unexpected user mark type", mark->GetMarkType()));
   }
 
@@ -935,6 +940,33 @@ void Framework::FillSpeedCameraMarkInfo(SpeedCameraMark const & speedCameraMark,
     title = title + " " + platform::GetLocalizedSpeedUnits(measurement_utils::GetMeasurementUnits());
 
   info.SetCustomNames(title, platform::GetLocalizedTypeName("highway-speed_camera"));
+}
+
+void Framework::FillFixedSpeedCameraMarkInfo(FixedSpeedCameraMark const & mark, place_page::Info & info) const
+{
+  info.SetCanEditOrAdd(false);
+  info.SetMercator(mark.GetPivot());
+
+  std::string title;
+  if (auto const kmph = mark.GetMaxSpeedKmph(); kmph != SpeedCameraZones::kUnknownSpeed)
+  {
+    auto const units = measurement_utils::GetMeasurementUnits();
+    double const speed = units == measurement_utils::Units::Imperial ? measurement_utils::KmphToMiph(kmph) : kmph;
+    title = strings::to_string(static_cast<int>(speed + 0.5)) + " " + platform::GetLocalizedSpeedUnits(units);
+  }
+  info.SetCustomNames(title, platform::GetLocalizedTypeName("highway-speed_camera"));
+}
+
+void Framework::CreateFixedSpeedCameraMarks()
+{
+  if (m_fixedSpeedCamMarksCreated)
+    return;
+  m_fixedSpeedCamMarksCreated = true;
+
+  m_speedCamZones.LoadOnce(kSpeedCamerasFile);
+  auto es = GetBookmarkManager().GetEditSession();
+  m_speedCamZones.ForEachCamera([&es](SpeedCameraZones::Camera const & c)
+  { es.CreateUserMark<FixedSpeedCameraMark>(c.m_point)->SetMaxSpeedKmph(c.m_maxSpeedKmph); });
 }
 
 void Framework::FillTransitMarkInfo(TransitMark const & transitMark, place_page::Info & info) const
@@ -1890,6 +1922,8 @@ void Framework::CreateDrapeEngine(ref_ptr<dp::GraphicsContextFactory> contextFac
   UNUSED_VALUE(settings::Get(kShowDebugInfo, showDebugInfo));
   if (showDebugInfo)
     m_drapeEngine->ShowDebugInfo(showDebugInfo);
+
+  CreateFixedSpeedCameraMarks();
 
   benchmark::RunGraphicsBenchmark(this);
 }

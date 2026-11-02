@@ -18,6 +18,7 @@ namespace speed_camera_zones_json
 {
 struct Camera
 {
+  std::string type;
   std::optional<int> vma;
   std::string lat;
   std::string lon;
@@ -29,11 +30,14 @@ template <>
 struct glz::meta<speed_camera_zones_json::Camera>
 {
   using T = speed_camera_zones_json::Camera;
-  static constexpr auto value = object("VMA ", &T::vma, "Latitude", &T::lat, " Longitude", &T::lon);
+  static constexpr auto value = object("Type de radar", &T::type, "VMA ", &T::vma, "Latitude", &T::lat, " Longitude", &T::lon);
 };
 
 namespace
 {
+// Type code of red light cameras.
+std::string_view constexpr kRedLightType = "ETFR";
+
 bool ParseCoord(std::string_view s, double & d)
 {
   strings::Trim(s);
@@ -87,7 +91,7 @@ bool SpeedCameraZones::LoadFromJson(std::string const & json)
     if (c.vma && *c.vma > 0 && *c.vma <= std::numeric_limits<uint8_t>::max())
       speed = static_cast<uint8_t>(*c.vma);
 
-    m_cameras.Add(Camera{mercator::FromLatLon(lat, lon), speed});
+    m_cameras.Add(Camera{mercator::FromLatLon(lat, lon), speed, c.type == kRedLightType});
   }
   return true;
 }
@@ -98,14 +102,14 @@ std::optional<SpeedCameraZones::Event> SpeedCameraZones::OnLocationUpdate(locati
     return {};
 
   auto const pos = mercator::FromLatLon(info.m_latitude, info.m_longitude);
-  double const radius = m_inZone ? kZoneRadiusM + kExitHysteresisM : kZoneRadiusM;
+  double const hysteresis = m_inZone ? kExitHysteresisM : 0.0;
 
   Camera const * closest = nullptr;
-  double minDist = radius;
-  m_cameras.ForEachInRect(mercator::RectByCenterXYAndSizeInMeters(pos, radius), [&](Camera const & c)
+  double minDist = std::numeric_limits<double>::max();
+  m_cameras.ForEachInRect(mercator::RectByCenterXYAndSizeInMeters(pos, kZoneRadiusM + hysteresis), [&](Camera const & c)
   {
     double const dist = mercator::DistanceOnEarth(pos, c.m_point);
-    if (dist <= minDist)
+    if (dist <= c.GetZoneRadiusM() + hysteresis && dist < minDist)
     {
       minDist = dist;
       closest = &c;
@@ -115,7 +119,7 @@ std::optional<SpeedCameraZones::Event> SpeedCameraZones::OnLocationUpdate(locati
   if (!m_inZone && closest)
   {
     m_inZone = true;
-    return Event{Event::Type::Entered, closest->m_maxSpeedKmph};
+    return Event{Event::Type::Entered, closest->m_maxSpeedKmph, closest->m_isRedLight};
   }
   if (m_inZone && !closest)
   {

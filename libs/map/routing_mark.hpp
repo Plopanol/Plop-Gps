@@ -204,6 +204,23 @@ private:
   dp::TitleDecl m_titleDecl;
 };
 
+// Fixed speed camera from the bundled data.gouv.fr list, shown on the map without a route.
+class FixedSpeedCameraMark : public UserMark
+{
+public:
+  explicit FixedSpeedCameraMark(m2::PointD const & ptOrg);
+
+  void SetMaxSpeedKmph(uint8_t maxSpeedKmph) { m_maxSpeedKmph = maxSpeedKmph; }
+  uint8_t GetMaxSpeedKmph() const { return m_maxSpeedKmph; }
+
+  bool SymbolIsPOI() const override { return true; }
+  drape_ptr<SymbolNameZoomInfo> GetSymbolNames() const override;
+  int GetMinZoom() const override;
+
+private:
+  uint8_t m_maxSpeedKmph = 0;
+};
+
 enum class RoadWarningMarkType : uint8_t
 {
   // Do not change the order, it uses in platforms.

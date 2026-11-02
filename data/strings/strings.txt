@@ -26692,6 +26692,15 @@ es = Zona de peligro
 fr = Zone de danger
 it = Zona di pericolo
 
+[speed_camera_zone_red_light]
+comment = Voice alert on entering a danger zone around a red light camera
+tags = android-libs-routing
+en = Danger zone, red light camera
+de = Gefahrenzone, Rotlichtüberwachung
+es = Zona de peligro, semáforo controlado
+fr = Zone de danger, feu rouge contrôlé
+it = Zona di pericolo, semaforo controllato
+
 [speed_camera_zone_left]
 comment = Voice alert on leaving a danger zone around a fixed speed camera
 tags = android-libs-routing

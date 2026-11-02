@@ -195,6 +195,8 @@ protected:
   TrafficManager m_trafficManager;
 
   SpeedCameraZones m_speedCamZones;
+  bool m_fixedSpeedCamMarksCreated = false;
+  void CreateFixedSpeedCameraMarks();
   std::function<void(SpeedCameraZones::Event const &)> m_onSpeedCameraZoneEvent;
 
   /// This function will be called by m_storage when latest local files
@@ -655,6 +657,7 @@ private:
   void FillMyPositionInfo(place_page::Info & info, place_page::BuildInfo const & buildInfo) const;
   void FillRouteMarkInfo(RouteMarkPoint const & rmp, place_page::Info & info) const;
   void FillSpeedCameraMarkInfo(SpeedCameraMark const & speedCameraMark, place_page::Info & info) const;
+  void FillFixedSpeedCameraMarkInfo(FixedSpeedCameraMark const & mark, place_page::Info & info) const;
   void FillTransitMarkInfo(TransitMark const & transitMark, place_page::Info & info) const;
   void FillRoadTypeMarkInfo(RoadWarningMark const & roadTypeMark, place_page::Info & info) const;
   void FillPointInfoForBookmark(Bookmark const & bmk, place_page::Info & info) const;

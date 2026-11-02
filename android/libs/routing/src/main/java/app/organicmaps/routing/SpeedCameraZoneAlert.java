@@ -29,7 +29,7 @@ public final class SpeedCameraZoneAlert implements SpeedCameraZoneListener
   }
 
   @Override
-  public void onSpeedCameraZoneEvent(boolean entered, int maxSpeedKmph)
+  public void onSpeedCameraZoneEvent(boolean entered, int maxSpeedKmph, boolean isRedLight)
   {
     if (!entered)
     {
@@ -38,8 +38,13 @@ public final class SpeedCameraZoneAlert implements SpeedCameraZoneListener
     }
 
     mPlayer.playback(R.raw.speed_cams_beep);
-    TtsPlayer.INSTANCE.speak(maxSpeedKmph > 0
-                                 ? mContext.getString(R.string.speed_camera_zone_entered, maxSpeedKmph)
-                                 : mContext.getString(R.string.speed_camera_zone_entered_no_limit));
+    final String text;
+    if (isRedLight)
+      text = mContext.getString(R.string.speed_camera_zone_red_light);
+    else if (maxSpeedKmph > 0)
+      text = mContext.getString(R.string.speed_camera_zone_entered, maxSpeedKmph);
+    else
+      text = mContext.getString(R.string.speed_camera_zone_entered_no_limit);
+    TtsPlayer.INSTANCE.speak(text);
   }
 }

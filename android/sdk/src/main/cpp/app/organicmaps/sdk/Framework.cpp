@@ -1308,9 +1308,9 @@ JNIEXPORT void Java_app_organicmaps_sdk_Framework_nativeSetSpeedCameraZoneListen
   frm()->SetSpeedCameraZoneListener([rf = jni::make_global_ref(listener)](SpeedCameraZones::Event const & event)
   {
     JNIEnv * jenv = jni::GetEnv();
-    jmethodID const methodId = jni::GetMethodID(jenv, *rf, "onSpeedCameraZoneEvent", "(ZI)V");
+    jmethodID const methodId = jni::GetMethodID(jenv, *rf, "onSpeedCameraZoneEvent", "(ZIZ)V");
     jenv->CallVoidMethod(*rf, methodId, static_cast<jboolean>(event.m_type == SpeedCameraZones::Event::Type::Entered),
-                         static_cast<jint>(event.m_maxSpeedKmph));
+                         static_cast<jint>(event.m_maxSpeedKmph), static_cast<jboolean>(event.m_isRedLight));
   });
 }
 

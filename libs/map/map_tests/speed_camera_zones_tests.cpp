@@ -103,6 +103,36 @@ UNIT_TEST(SpeedCameraZones_OverlappingZones)
   TEST_EQUAL(left, 1, ());
 }
 
+UNIT_TEST(SpeedCameraZones_RedLight)
+{
+  auto zones = MakeZones(R"([
+    {"Type de radar":"ETFR","VMA ":null,"Latitude":"+45.0"," Longitude":"+4.0"}
+  ])");
+
+  TEST(!zones.OnLocationUpdate(MakeInfo(45.0, 4.0, -300)), ());
+  auto const entered = zones.OnLocationUpdate(MakeInfo(45.0, 4.0, -240));
+  TEST(entered && entered->m_type == Type::Entered, ());
+  TEST(entered->m_isRedLight, ());
+
+  TEST(!zones.OnLocationUpdate(MakeInfo(45.0, 4.0, 300)), ("Hysteresis"));
+  auto const left = zones.OnLocationUpdate(MakeInfo(45.0, 4.0, 360));
+  TEST(left && left->m_type == Type::Left, ());
+}
+
+UNIT_TEST(SpeedCameraZones_RedLightInsideSpeedZone)
+{
+  // A red light camera close to a speed camera: the speed zone is entered first.
+  auto zones = MakeZones(R"([
+    {"Type de radar":"ETFR","VMA ":null,"Latitude":"+45.0"," Longitude":"+4.0"},
+    {"Type de radar":"ETF","VMA ":50,"Latitude":"+45.0045"," Longitude":"+4.0"}
+  ])");
+
+  auto const entered = zones.OnLocationUpdate(MakeInfo(45.0, 4.0, -1000));
+  TEST(entered && !entered->m_isRedLight, ());
+  TEST_EQUAL(entered->m_maxSpeedKmph, 50, ());
+  TEST(!zones.OnLocationUpdate(MakeInfo(45.0, 4.0, 0)), ());
+}
+
 UNIT_TEST(SpeedCameraZones_PoorAccuracyIgnored)
 {
   auto zones = MakeZones();
@@ -115,6 +145,10 @@ UNIT_TEST(SpeedCameraZones_RealData)
   SpeedCameraZones zones;
   zones.LoadOnce("radars_fixes_fr.json");
   TEST_GREATER(zones.GetCount(), 3000, ());
+
+  size_t redLights = 0;
+  zones.ForEachCamera([&redLights](SpeedCameraZones::Camera const & c) { redLights += c.m_isRedLight; });
+  TEST_GREATER(redLights, 400, ());
 
   auto const entered = zones.OnLocationUpdate(MakeInfo(kCamLat, kCamLon, 0));
   TEST(entered && entered->m_type == Type::Entered, ());
