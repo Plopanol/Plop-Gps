@@ -31,6 +31,9 @@ class RouteMatchingInfo;
 
 namespace routing
 {
+/// \returns speed limit in m/s: > 0 if known, 0 if unlimited, < 0 if unknown.
+double SpeedLimitToMps(SpeedInUnits const & speedLimit);
+
 /// \breaf This class is responsible for the route built in the program.
 /// \note All method of this class should be called from ui thread if there's no
 /// a special note near a method.
@@ -89,6 +92,8 @@ public:
 
   bool MatchLocationToRoute(location::GpsInfo & location, location::RouteMatchingInfo & routeMatchingInfo);
   void MatchLocationToRoadGraph(location::GpsInfo & location);
+  /// Projects |point| to the closest road in the movement direction, without a route.
+  bool FindClosestProjectionToRoad(m2::PointD const & point, EdgeProj & proj) const;
   // Get traffic speed for the current route position.
   // Returns SpeedGroup::Unknown if any trouble happens: position doesn't match with route or something else.
   traffic::SpeedGroup MatchTraffic(location::RouteMatchingInfo const & routeMatchingInfo) const;

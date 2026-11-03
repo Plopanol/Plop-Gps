@@ -29,6 +29,15 @@ namespace routing
 using namespace location;
 using namespace traffic;
 
+double SpeedLimitToMps(SpeedInUnits const & speedLimit)
+{
+  if (speedLimit.IsNumeric())
+    return measurement_utils::KmphToMps(speedLimit.GetSpeedKmPH());
+  if (speedLimit.GetSpeed() == kNoneMaxSpeed)
+    return 0;
+  return -1.0;
+}
+
 void FormatDistance(double dist, std::string & value, std::string & suffix)
 {
   platform::Distance d = platform::Distance::CreateFormatted(dist);
@@ -420,13 +429,7 @@ void RoutingSession::GetRouteFollowingInfo(FollowingInfo & info) const
   info.m_distToTurn = platform::Distance::CreateFormatted(distanceToTurnMeters);
   info.m_turn = turn.m_turn;
 
-  SpeedInUnits const speedLimit = m_route->GetCurrentSpeedLimit();
-  if (speedLimit.IsNumeric())
-    info.m_speedLimitMps = measurement_utils::KmphToMps(speedLimit.GetSpeedKmPH());
-  else if (speedLimit.GetSpeed() == kNoneMaxSpeed)
-    info.m_speedLimitMps = 0;
-  else
-    info.m_speedLimitMps = -1.0;
+  info.m_speedLimitMps = SpeedLimitToMps(m_route->GetCurrentSpeedLimit());
 
   // The turn after the next one.
   if (m_routingSettings.m_showTurnAfterNext)
@@ -662,6 +665,17 @@ void RoutingSession::MatchLocationToRoadGraph(location::GpsInfo & location)
   }
 
   m_proj = proj;
+}
+
+bool RoutingSession::FindClosestProjectionToRoad(m2::PointD const & point, EdgeProj & proj) const
+{
+  CHECK_THREAD_CHECKER(m_threadChecker, ());
+
+  m2::PointD const direction = m_positionAccumulator.GetDirection();
+  if (AlmostEqualAbs(direction, m2::PointD::Zero(), 1e-5))
+    return false;
+
+  return m_router->FindClosestProjectionToRoad(point, direction, m_routingSettings.m_matchingThresholdM, proj);
 }
 
 bool RoutingSession::MatchLocationToRoute(location::GpsInfo & location, location::RouteMatchingInfo & routeMatchingInfo)

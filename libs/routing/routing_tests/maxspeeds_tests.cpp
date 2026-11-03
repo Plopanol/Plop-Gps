@@ -2,6 +2,7 @@
 
 #include "routing/maxspeeds.hpp"
 #include "routing/maxspeeds_serialization.hpp"
+#include "routing/routing_session.hpp"
 #include "routing/routing_tests/index_graph_tools.hpp"
 
 #include "routing_common/maxspeed_conversion.hpp"
@@ -232,6 +233,21 @@ UNIT_TEST(Maxspeed_Smoke)
     TEST_EQUAL(maxspeed.GetBackward(), 40, ());
     TEST_EQUAL(maxspeed.GetBackwardKmPH(), 40, ());
   }
+}
+
+UNIT_TEST(SpeedLimitToMps_Smoke)
+{
+  TEST_ALMOST_EQUAL_ABS(SpeedLimitToMps({90, Units::Metric}), 25.0, 1e-9, ());
+  // Imperial limits are rounded to whole km/h: 30 mph -> 48 km/h.
+  TEST_ALMOST_EQUAL_ABS(SpeedLimitToMps({30, Units::Imperial}), 48 / 3.6, 1e-9, ());
+
+  // Directional and conditional limits as used for free-drive.
+  Maxspeed maxspeed = {Units::Metric, 50 /* forward */, 70 /* backward */};
+  TEST_ALMOST_EQUAL_ABS(SpeedLimitToMps(maxspeed.GetCurrentSpeed(0, false /* forward */)), 70 / 3.6, 1e-9, ());
+
+  TEST_EQUAL(SpeedLimitToMps({kNoneMaxSpeed, Units::Metric}), 0.0, ());
+  TEST_LESS(SpeedLimitToMps({kInvalidSpeed, Units::Metric}), 0.0, ());
+  TEST_LESS(SpeedLimitToMps(Maxspeed().GetCurrentSpeed(0, true /* forward */)), 0.0, ());
 }
 
 UNIT_TEST(Maxspeeds_Routing_TimeDependent)

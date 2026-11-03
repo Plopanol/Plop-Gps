@@ -7,6 +7,7 @@
 #include "map/transit/transit_reader.hpp"
 
 #include "routing/following_info.hpp"
+#include "routing/maxspeeds.hpp"
 #include "routing/route.hpp"
 #include "routing/router.hpp"
 #include "routing/routing_callbacks.hpp"
@@ -14,6 +15,8 @@
 #include "routing/speed_camera_manager.hpp"
 
 #include "storage/storage_defines.hpp"
+
+#include "indexer/feature_decl.hpp"
 
 #include "drape_frontend/drape_engine_safe_ptr.hpp"
 
@@ -257,6 +260,10 @@ public:
   routing::SpeedCameraManager & GetSpeedCamManager() { return m_routingSession.GetSpeedCamManager(); }
   bool IsSpeedCamLimitExceeded() const;
 
+  /// Speed limit of the road the user drives on without a route, same convention as
+  /// FollowingInfo::m_speedLimitMps. Always unknown while routing is active.
+  double GetFreeDriveSpeedLimitMps() const { return m_freeDriveSpeedLimitMps; }
+
   void SetTurnNotificationsUnits(measurement_utils::Units const units)
   {
     m_routingSession.SetTurnNotificationsUnits(units);
@@ -363,6 +370,8 @@ private:
   std::vector<RouteMarkData> GetRoutePointsToSave() const;
 
   void OnExtrapolatedLocationUpdate(location::GpsInfo const & info);
+  void UpdateFreeDriveSpeedLimit(location::GpsInfo const & info);
+  routing::Maxspeeds const & GetMaxspeeds(MwmSet::MwmId const & mwmId);
 
   RouteBuildingCallback m_routingBuildingCallback;
   RouteSpeedCamShowCallback m_routeSpeedCamShowCallback;
@@ -377,6 +386,11 @@ private:
 
   BookmarkManager * m_bmManager = nullptr;
   extrapolation::Extrapolator m_extrapolator;
+
+  double m_freeDriveSpeedLimitMps = -1.0;
+  FeatureID m_freeDriveFeatureId;
+  bool m_freeDriveForward = true;
+  std::map<MwmSet::MwmId, std::unique_ptr<routing::Maxspeeds>> m_maxspeedsCache;
 
   std::vector<dp::DrapeID> m_drapeSubroutes;
   mutable std::mutex m_drapeSubroutesMutex;

@@ -1828,8 +1828,55 @@ void RoutingManager::OnExtrapolatedLocationUpdate(location::GpsInfo const & info
   if (!m_drapeEngine)
     m_gpsInfoCache = std::make_unique<location::GpsInfo>(gpsInfo);
 
+  UpdateFreeDriveSpeedLimit(info);
+
   auto routeMatchingInfo = GetRouteMatchingInfo(gpsInfo);
   m_drapeEngine.SafeCall(&df::DrapeEngine::SetGpsInfo, gpsInfo, m_routingSession.IsNavigable(), routeMatchingInfo);
+}
+
+void RoutingManager::UpdateFreeDriveSpeedLimit(location::GpsInfo const & info)
+{
+  if (IsRoutingActive())
+  {
+    m_freeDriveSpeedLimitMps = -1.0;
+    m_freeDriveFeatureId = {};
+    return;
+  }
+
+  // Keep the last limit while stopped (e.g. at traffic lights): the movement direction is unreliable.
+  double constexpr kMinMovingSpeedMps = 1.0;
+  if (!info.HasSpeed() || info.m_speed < kMinMovingSpeedMps)
+    return;
+
+  routing::EdgeProj proj;
+  if (!m_routingSession.FindClosestProjectionToRoad(mercator::FromLatLon(info.m_latitude, info.m_longitude), proj))
+  {
+    m_freeDriveSpeedLimitMps = -1.0;
+    m_freeDriveFeatureId = {};
+    return;
+  }
+
+  auto const & edge = proj.m_edge;
+  if (edge.GetFeatureId() == m_freeDriveFeatureId && edge.IsForward() == m_freeDriveForward)
+    return;
+
+  m_freeDriveFeatureId = edge.GetFeatureId();
+  m_freeDriveForward = edge.IsForward();
+  auto const maxspeed = GetMaxspeeds(m_freeDriveFeatureId.m_mwmId).GetMaxspeed(m_freeDriveFeatureId.m_index);
+  m_freeDriveSpeedLimitMps = routing::SpeedLimitToMps(maxspeed.GetCurrentSpeed(time(nullptr), m_freeDriveForward));
+}
+
+routing::Maxspeeds const & RoutingManager::GetMaxspeeds(MwmSet::MwmId const & mwmId)
+{
+  auto it = m_maxspeedsCache.find(mwmId);
+  if (it == m_maxspeedsCache.end())
+  {
+    // Drop entries of maps that were updated or deleted.
+    std::erase_if(m_maxspeedsCache, [](auto const & p) { return !p.first.IsAlive(); });
+    auto maxspeeds = routing::LoadMaxspeeds(m_callbacks.m_dataSourceGetter().GetMwmHandleById(mwmId));
+    it = m_maxspeedsCache.emplace(mwmId, std::move(maxspeeds)).first;
+  }
+  return *it->second;
 }
 
 void RoutingManager::DeleteSavedRoutePoints()
