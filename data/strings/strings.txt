@@ -7009,6 +7009,146 @@ vi = Nhà cửa 3D
 zh-Hans = 3D 建筑
 zh-Hant = 3D 建築
 
+[pref_map_buildings_title]
+comment = Settings «Map» category: show buildings on the map
+tags = android-app
+en = Buildings
+de = Gebäude
+es = Edificios
+fr = Bâtiments
+it = Edifici
+ru = Здания
+
+[pref_map_poi_categories_title]
+comment = Settings «Map» category: choose which points of interest are shown on the map
+tags = android-app
+en = Points of interest shown
+de = Angezeigte Orte
+es = Puntos de interés mostrados
+fr = Points d'intérêt affichés
+it = Punti di interesse mostrati
+ru = Отображаемые места
+
+[pref_map_poi_categories_all]
+comment = Summary of the points of interest preference when all categories are shown
+tags = android-app
+en = All
+de = Alle
+es = Todos
+fr = Tous
+it = Tutti
+ru = Все
+
+[pref_map_poi_categories_none]
+comment = Summary of the points of interest preference when all categories are hidden
+tags = android-app
+en = None
+de = Keine
+es = Ninguno
+fr = Aucun
+it = Nessuno
+ru = Нет
+
+[poi_category_food]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Food and drink
+de = Essen und Trinken
+es = Comida y bebida
+fr = Restauration
+it = Cibo e bevande
+ru = Еда и напитки
+
+[poi_category_shops]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Shops
+de = Geschäfte
+es = Tiendas
+fr = Commerces
+it = Negozi
+ru = Магазины
+
+[poi_category_accommodation]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Accommodation
+de = Unterkünfte
+es = Alojamiento
+fr = Hébergement
+it = Alloggi
+ru = Жильё
+
+[poi_category_tourism]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Tourism and culture
+de = Tourismus und Kultur
+es = Turismo y cultura
+fr = Tourisme et culture
+it = Turismo e cultura
+ru = Туризм и культура
+
+[poi_category_transport]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Public transport
+de = Öffentlicher Verkehr
+es = Transporte público
+fr = Transports en commun
+it = Trasporto pubblico
+ru = Общественный транспорт
+
+[poi_category_car]
+comment = Category of points of interest shown on the map: parkings, fuel stations, etc.
+tags = android-app
+en = Car
+de = Auto
+es = Coche
+fr = Voiture
+it = Auto
+ru = Автомобиль
+
+[poi_category_health]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Health
+de = Gesundheit
+es = Salud
+fr = Santé
+it = Salute
+ru = Здоровье
+
+[poi_category_services]
+comment = Category of points of interest shown on the map: banks, post offices, toilets, etc.
+tags = android-app
+en = Services
+de = Dienstleistungen
+es = Servicios
+fr = Services
+it = Servizi
+ru = Услуги
+
+[poi_category_leisure]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Leisure and sport
+de = Freizeit und Sport
+es = Ocio y deporte
+fr = Loisirs et sport
+it = Tempo libero e sport
+ru = Отдых и спорт
+
+[poi_category_worship]
+comment = Category of points of interest shown on the map
+tags = android-app
+en = Places of worship
+de = Gotteshäuser
+es = Lugares de culto
+fr = Lieux de culte
+it = Luoghi di culto
+ru = Места поклонения
+
 [pref_map_3d_buildings_disabled_summary]
 comment = A message in Settings/Preferences explaining why is it not possible to enable 3D buildings when max power saving mode is enabled
 tags = android-app,apple-maps
