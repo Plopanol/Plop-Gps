@@ -647,6 +647,13 @@
     <string name="export_file_geojson">GeoJSON exportieren</string>
     <string name="delete_list">Liste löschen</string>
     <string name="speedcams_alert_title">Blitzer</string>
+    <!-- Settings switch: mute turn-by-turn voice instructions, keep speed camera alerts -->
+    <string name="pref_tts_radars_only_title">Stiller Modus</string>
+    <string name="pref_tts_radars_only_summary">Nur Blitzerwarnungen werden angesagt</string>
+    <!-- Settings switch: speak a phrase instead of playing the speed camera beep -->
+    <string name="pref_tts_speed_cam_phrase_title">Signalton durch einen Satz ersetzen</string>
+    <!-- Settings text field: the phrase spoken as speed camera alert -->
+    <string name="pref_tts_speed_cam_phrase_text_title">Satz für die Blitzerwarnung</string>
     <string name="place_description_title">Ortsbeschreibung</string>
     <!-- this text will be shown in application notification preferences opposite checkbox which enable/disable downloader notifications. Devices on Android 8+ are affected. -->
     <string name="notification_channel_downloader">Karten werden geladen</string>

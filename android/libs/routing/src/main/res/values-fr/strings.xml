@@ -46,6 +46,8 @@
     <string name="speed_camera_zone_red_light">Zone de danger, feu rouge contrôlé</string>
     <!-- Voice alert on leaving a danger zone around a fixed speed camera -->
     <string name="speed_camera_zone_left">Fin de zone de danger</string>
+    <!-- Default voice phrase spoken instead of the speed camera beep -->
+    <string name="speed_camera_alert_default_phrase">Attention, radar</string>
     <string name="ok">Ok</string>
 
     <!-- SECTION: Bookmark types used for sorting -->

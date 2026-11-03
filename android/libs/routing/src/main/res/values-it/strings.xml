@@ -46,6 +46,8 @@
     <string name="speed_camera_zone_red_light">Zona di pericolo, semaforo controllato</string>
     <!-- Voice alert on leaving a danger zone around a fixed speed camera -->
     <string name="speed_camera_zone_left">Fine della zona di pericolo</string>
+    <!-- Default voice phrase spoken instead of the speed camera beep -->
+    <string name="speed_camera_alert_default_phrase">Attenzione, autovelox</string>
     <string name="ok">Ok</string>
 
     <!-- SECTION: Bookmark types used for sorting -->

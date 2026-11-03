@@ -46,6 +46,8 @@
     <string name="speed_camera_zone_red_light">Danger zone, red light camera</string>
     <!-- Voice alert on leaving a danger zone around a fixed speed camera -->
     <string name="speed_camera_zone_left">End of danger zone</string>
+    <!-- Default voice phrase spoken instead of the speed camera beep -->
+    <string name="speed_camera_alert_default_phrase">Speed camera ahead</string>
     <string name="ok">OK</string>
 
     <!-- SECTION: Bookmark types used for sorting -->

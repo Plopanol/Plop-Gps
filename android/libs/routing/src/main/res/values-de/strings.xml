@@ -46,6 +46,8 @@
     <string name="speed_camera_zone_red_light">Gefahrenzone, Rotlichtüberwachung</string>
     <!-- Voice alert on leaving a danger zone around a fixed speed camera -->
     <string name="speed_camera_zone_left">Ende der Gefahrenzone</string>
+    <!-- Default voice phrase spoken instead of the speed camera beep -->
+    <string name="speed_camera_alert_default_phrase">Achtung, Blitzer</string>
     <string name="ok">Ok</string>
 
     <!-- SECTION: Bookmark types used for sorting -->
