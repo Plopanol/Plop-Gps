@@ -1623,6 +1623,26 @@ JNIEXPORT jboolean Java_app_organicmaps_sdk_Framework_nativeIsTransitSchemeEnabl
   return static_cast<jboolean>(frm()->LoadTransitSchemeEnabled());
 }
 
+JNIEXPORT jboolean Java_app_organicmaps_sdk_Framework_nativeIsBuildingsEnabled(JNIEnv *, jclass)
+{
+  return static_cast<jboolean>(Framework::LoadMapFeaturesFilter().m_buildingsEnabled);
+}
+
+JNIEXPORT void Java_app_organicmaps_sdk_Framework_nativeSetBuildingsEnabled(JNIEnv *, jclass, jboolean enabled)
+{
+  frm()->SetBuildingsEnabled(static_cast<bool>(enabled));
+}
+
+JNIEXPORT jint Java_app_organicmaps_sdk_Framework_nativeGetHiddenPoiCategories(JNIEnv *, jclass)
+{
+  return static_cast<jint>(Framework::LoadMapFeaturesFilter().m_hiddenPoiCategories);
+}
+
+JNIEXPORT void Java_app_organicmaps_sdk_Framework_nativeSetHiddenPoiCategories(JNIEnv *, jclass, jint mask)
+{
+  frm()->SetHiddenPoiCategories(static_cast<uint32_t>(mask));
+}
+
 JNIEXPORT void Java_app_organicmaps_sdk_Framework_nativeSetIsolinesLayerEnabled(JNIEnv * env, jclass, jboolean enabled)
 {
   auto const isolinesEnabled = static_cast<bool>(enabled);

@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
+import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.TwoStatePreference;
@@ -39,8 +40,10 @@ import app.organicmaps.util.ThemeSwitcher;
 import app.organicmaps.util.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements LanguagesFragment.Listener
 {
@@ -63,6 +66,8 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
     initLargeFontSizePrefsCallbacks();
     initTransliterationPrefsCallbacks();
     init3dModePrefsCallbacks();
+    initBuildingsPrefsCallbacks();
+    initPoiCategoriesPrefsCallbacks();
     initPerspectivePrefsCallbacks();
     initAutoZoomPrefsCallbacks();
     initLoggingEnabledPrefsCallbacks();
@@ -383,6 +388,58 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
       Framework.nativeSet3dMode(current.enabled, (Boolean) newValue);
       return true;
     });
+  }
+
+  private void initBuildingsPrefsCallbacks()
+  {
+    final TwoStatePreference pref = getPreference(getString(R.string.pref_buildings));
+    pref.setChecked(Framework.nativeIsBuildingsEnabled());
+    pref.setOnPreferenceChangeListener((preference, newValue) -> {
+      Framework.nativeSetBuildingsEnabled((Boolean) newValue);
+      return true;
+    });
+  }
+
+  private void initPoiCategoriesPrefsCallbacks()
+  {
+    final MultiSelectListPreference pref = getPreference(getString(R.string.pref_poi_categories));
+    final CharSequence[] values = pref.getEntryValues();
+
+    // The native mask stores hidden categories, the preference shows the visible ones.
+    final int hiddenMask = Framework.nativeGetHiddenPoiCategories();
+    final Set<String> visible = new HashSet<>();
+    for (CharSequence value : values)
+    {
+      if ((hiddenMask & (1 << Integer.parseInt(value.toString()))) == 0)
+        visible.add(value.toString());
+    }
+    pref.setValues(visible);
+    updatePoiCategoriesSummary(pref, visible);
+
+    pref.setOnPreferenceChangeListener((preference, newValue) -> {
+      @SuppressWarnings("unchecked")
+      final Set<String> newVisible = (Set<String>) newValue;
+      int mask = 0;
+      for (CharSequence value : values)
+      {
+        if (!newVisible.contains(value.toString()))
+          mask |= 1 << Integer.parseInt(value.toString());
+      }
+      Framework.nativeSetHiddenPoiCategories(mask);
+      updatePoiCategoriesSummary(pref, newVisible);
+      return true;
+    });
+  }
+
+  private void updatePoiCategoriesSummary(@NonNull MultiSelectListPreference pref, @NonNull Set<String> visible)
+  {
+    final int total = pref.getEntryValues().length;
+    if (visible.size() == total)
+      pref.setSummary(R.string.pref_map_poi_categories_all);
+    else if (visible.isEmpty())
+      pref.setSummary(R.string.pref_map_poi_categories_none);
+    else
+      pref.setSummary(String.format(Locale.getDefault(), "%d / %d", visible.size(), total));
   }
 
   // Argument `powerManagementValue` could be null on the first app run.

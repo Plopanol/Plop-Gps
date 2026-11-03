@@ -40,48 +40,61 @@
       app:singleLineTitle="false"
       android:order="3" />
     <SwitchPreferenceCompat
+      android:key="@string/pref_buildings"
+      android:title="@string/pref_map_buildings_title"
+      app:singleLineTitle="false"
+      android:defaultValue="true"
+      android:order="4" />
+    <MultiSelectListPreference
+      android:key="@string/pref_poi_categories"
+      android:title="@string/pref_map_poi_categories_title"
+      app:singleLineTitle="false"
+      android:entries="@array/poi_categories"
+      android:entryValues="@array/poi_categories_values"
+      android:order="5" />
+    <SwitchPreferenceCompat
       android:key="@string/pref_autodownload"
       android:title="@string/autodownload"
       app:singleLineTitle="false"
-      android:order="4" />
+      android:order="6" />
     <SwitchPreferenceCompat
       android:key="@string/pref_show_downloaded_regions"
       android:title="@string/show_downloaded_regions"
       app:singleLineTitle="false"
       android:defaultValue="true"
-      android:order="5" />
+      android:order="7" />
     <SwitchPreferenceCompat
       android:key="@string/pref_large_fonts_size"
       android:title="@string/big_font"
       app:singleLineTitle="false"
       android:defaultValue="false"
-      android:order="6" />
+      android:order="8" />
     <SwitchPreferenceCompat
       android:key="@string/pref_transliteration"
       android:title="@string/transliteration_title"
       app:singleLineTitle="false"
       android:defaultValue="false"
-      android:order="7" />
+      android:order="9" />
     <Preference
       android:key="@string/pref_storage"
       android:title="@string/maps_storage"
       app:singleLineTitle="false"
       android:summary="@string/maps_storage_summary"
-      android:order="8" />
+      android:order="10" />
     <SwitchPreferenceCompat
       android:key="@string/pref_enable_logging"
       android:title="@string/enable_logging"
       app:singleLineTitle="false"
       android:summary="@string/enable_logging_warning_message"
       android:defaultValue="false"
-      android:order="12" />
+      android:order="14" />
     <SwitchPreferenceCompat
       android:key="@string/pref_emulate_bad_external_storage"
       android:title="@string/setting_emulate_bad_storage"
       app:singleLineTitle="false"
       android:defaultValue="false"
       app:isPreferenceVisible="false"
-      android:order="13" />
+      android:order="15" />
     <ListPreference
       android:key="@string/pref_use_mobile_data"
       android:title="@string/mobile_data"
@@ -89,7 +102,7 @@
       android:summary="@string/mobile_data_description"
       android:entries="@array/mobile_data_options"
       android:entryValues="@array/mobile_data_options_values"
-      android:order="14" />
+      android:order="16" />
     <ListPreference
       android:key="@string/pref_power_management"
       android:title="@string/power_managment_title"
@@ -97,7 +110,7 @@
       android:summary="@string/power_managment_description"
       android:entries="@array/power_management_scheme"
       android:entryValues="@array/power_management_scheme_values"
-      android:order="15" />
+      android:order="17" />
     <ListPreference
       android:key="@string/pref_bookmarks_text_placement"
       android:title="@string/bookmarks_text_placement_title"
@@ -105,40 +118,40 @@
       android:summary="@string/bookmarks_text_placement_description"
       android:entries="@array/bookmarks_text_placement_options"
       android:entryValues="@array/bookmarks_text_placement_values"
-      android:order="16" />
+      android:order="18" />
     <SwitchPreferenceCompat
       android:key="@string/pref_keep_screen_on"
       android:title="@string/enable_keep_screen_on"
       app:singleLineTitle="false"
       android:summary="@string/enable_keep_screen_on_description"
       android:defaultValue="false"
-      android:order="17"/>
+      android:order="19"/>
     <SwitchPreferenceCompat
       android:key="@string/pref_show_on_lock_screen"
       android:title="@string/enable_show_on_lock_screen"
       app:singleLineTitle="false"
       android:summary="@string/enable_show_on_lock_screen_description"
       android:defaultValue="true"
-      android:order="18"/>
+      android:order="20"/>
     <SwitchPreferenceCompat
       android:key="@string/pref_now_playing"
       android:title="@string/enable_now_playing"
       app:singleLineTitle="false"
       android:summary="@string/enable_now_playing_description"
       android:defaultValue="false"
-      android:order="19"/>
+      android:order="21"/>
     <Preference
       android:key="@string/pref_map_locale"
       android:title="@string/change_map_locale"
       app:singleLineTitle="false"
       android:persistent="false"
-        android:order="20"/>
+        android:order="22"/>
     <Preference
       android:key="@string/pref_bg_tiles_screen"
       android:title="@string/pref_bg_tiles_title"
       app:singleLineTitle="false"
       android:persistent="false"
-      android:order="21"/>
+      android:order="23"/>
   </androidx.preference.PreferenceCategory>
 
   <androidx.preference.PreferenceCategory

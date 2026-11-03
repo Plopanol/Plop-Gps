@@ -355,6 +355,13 @@ public class Framework
   public static native void nativeGet3dMode(Params3dMode result);
   public static native void nativeSet3dMode(boolean allow3d, boolean allow3dBuildings);
 
+  public static native boolean nativeIsBuildingsEnabled();
+  public static native void nativeSetBuildingsEnabled(boolean enabled);
+
+  // Bit mask of hidden POI categories, bit indexes are R.array.poi_categories_values.
+  public static native int nativeGetHiddenPoiCategories();
+  public static native void nativeSetHiddenPoiCategories(int mask);
+
   public static native boolean nativeGetAutoZoomEnabled();
   public static native void nativeSetAutoZoomEnabled(boolean enabled);
 
