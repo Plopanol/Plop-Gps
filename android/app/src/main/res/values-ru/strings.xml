@@ -213,6 +213,34 @@
     <string name="pref_map_3d_title">Перспективный вид</string>
     <!-- Settings «Map» category: «3D buildings» title -->
     <string name="pref_map_3d_buildings_title">3D здания</string>
+    <!-- Settings «Map» category: show buildings on the map -->
+    <string name="pref_map_buildings_title">Здания</string>
+    <!-- Settings «Map» category: choose which points of interest are shown on the map -->
+    <string name="pref_map_poi_categories_title">Отображаемые места</string>
+    <!-- Summary of the points of interest preference when all categories are shown -->
+    <string name="pref_map_poi_categories_all">Все</string>
+    <!-- Summary of the points of interest preference when all categories are hidden -->
+    <string name="pref_map_poi_categories_none">Нет</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_food">Еда и напитки</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_shops">Магазины</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_accommodation">Жильё</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_tourism">Туризм и культура</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_transport">Общественный транспорт</string>
+    <!-- Category of points of interest shown on the map: parkings, fuel stations, etc. -->
+    <string name="poi_category_car">Автомобиль</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_health">Здоровье</string>
+    <!-- Category of points of interest shown on the map: banks, post offices, toilets, etc. -->
+    <string name="poi_category_services">Услуги</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_leisure">Отдых и спорт</string>
+    <!-- Category of points of interest shown on the map -->
+    <string name="poi_category_worship">Места поклонения</string>
     <!-- A message in Settings/Preferences explaining why is it not possible to enable 3D buildings when max power saving mode is enabled -->
     <string name="pref_map_3d_buildings_disabled_summary">3D-здания отключаются в режиме энергосбережения</string>
     <!-- Settings: title of the satellite imagery (custom raster tiles) screen -->
