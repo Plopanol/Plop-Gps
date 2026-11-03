@@ -509,7 +509,8 @@ void RoutingSession::GenerateNotifications(std::vector<std::string> & notificati
   if (m_routingRebuildCount > m_routingRebuildAnnounceCount)
   {
     m_routingRebuildAnnounceCount = m_routingRebuildCount;
-    notifications.emplace_back(m_turnNotificationsMgr.GenerateRecalculatingText());
+    if (m_turnNotificationsMgr.IsEnabled())
+      notifications.emplace_back(m_turnNotificationsMgr.GenerateRecalculatingText());
     return;
   }
 
