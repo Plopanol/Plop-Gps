@@ -24,6 +24,7 @@
 #include "drape_frontend/drape_api.hpp"
 #include "drape_frontend/drape_engine.hpp"
 #include "drape_frontend/gui/skin.hpp"
+#include "drape_frontend/map_features_filter.hpp"
 #include "drape_frontend/user_event_stream.hpp"
 
 #include "drape/drape_global.hpp"
@@ -800,6 +801,11 @@ public:
 
   static bool IsCyclingEnabled();
   void SetCyclingEnabled(bool enabled);
+
+  static df::MapFeaturesFilter LoadMapFeaturesFilter();
+  void SetBuildingsEnabled(bool enabled);
+  // Bit mask of ftypes::PoiCategoryBit().
+  void SetHiddenPoiCategories(uint32_t mask);
 
   static dp::ApiVersion LoadPreferredGraphicsAPI();
   static void SavePreferredGraphicsAPI(dp::ApiVersion apiVersion);

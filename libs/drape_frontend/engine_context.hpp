@@ -1,6 +1,7 @@
 #pragma once
 
 #include "drape_frontend/custom_features_context.hpp"
+#include "drape_frontend/map_features_filter.hpp"
 #include "drape_frontend/map_shape.hpp"
 #include "drape_frontend/threads_commutator.hpp"
 #include "drape_frontend/traffic_generator.hpp"
@@ -25,13 +26,15 @@ class EngineContext
 public:
   EngineContext(TileKey tileKey, ref_ptr<ThreadsCommutator> commutator, ref_ptr<dp::TextureManager> texMng,
                 ref_ptr<MetalineManager> metalineMng, CustomFeaturesContextWeakPtr customFeaturesContext,
-                bool is3dBuildingsEnabled, bool isTrafficEnabled, bool isolinesEnabled, int8_t mapLangIndex,
-                dp::BackgroundMode backgroundMode, float areaOpacity);
+                bool is3dBuildingsEnabled, bool isTrafficEnabled, bool isolinesEnabled,
+                MapFeaturesFilter const & mapFeaturesFilter, int8_t mapLangIndex, dp::BackgroundMode backgroundMode,
+                float areaOpacity);
 
   TileKey const & GetTileKey() const { return m_tileKey; }
   bool Is3dBuildingsEnabled() const { return m_3dBuildingsEnabled; }
   bool IsTrafficEnabled() const { return m_trafficEnabled; }
   bool IsolinesEnabled() const { return m_isolinesEnabled; }
+  MapFeaturesFilter const & GetMapFeaturesFilter() const { return m_mapFeaturesFilter; }
   int8_t GetMapLangIndex() const { return m_mapLangIndex; }
   dp::BackgroundMode GetBackgroundMode() const { return m_backgroundMode; }
   // Area-fill opacity used in Satellite mode (0..1). Only consulted when GetBackgroundMode() == Satellite.
@@ -64,6 +67,7 @@ private:
   bool m_3dBuildingsEnabled;
   bool m_trafficEnabled;
   bool m_isolinesEnabled;
+  MapFeaturesFilter m_mapFeaturesFilter;
   int8_t m_mapLangIndex;
   dp::BackgroundMode m_backgroundMode;
   float m_areaOpacity;

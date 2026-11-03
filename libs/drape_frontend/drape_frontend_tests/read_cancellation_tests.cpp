@@ -89,7 +89,8 @@ private:
 
 df::EngineContext MakeContext(df::TileKey const & key, df::ThreadsCommutator & commutator)
 {
-  return {key, make_ref(&commutator), nullptr, nullptr, {}, false, false, false, 0, dp::BackgroundMode::Default, 1.0f};
+  return {key, make_ref(&commutator), nullptr, nullptr, {}, false, false, false, {}, 0, dp::BackgroundMode::Default,
+          1.0f};
 }
 
 df::TMapShapes MakeShape(int id, size_t & destroyed)
@@ -240,7 +241,7 @@ public:
               [](std::string_view) { return true; }, [](auto const &, int) {}, [](auto const &, auto) { return false; },
               [](auto const &, auto) {})
     , m_metalines(make_ref(&m_commutator), m_model)
-    , m_reader(make_ref(&m_commutator), m_model, false, false, false, dp::BackgroundMode::Default, 0.5f)
+    , m_reader(make_ref(&m_commutator), m_model, false, false, false, {}, dp::BackgroundMode::Default, 0.5f)
   {
     df::VisualParams::Init(1.0, 1024);
     m_screen.OnSize(0, 0, 256, 256);

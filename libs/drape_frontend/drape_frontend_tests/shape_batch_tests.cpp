@@ -72,7 +72,8 @@ private:
 df::EngineContext MakeContext(df::ThreadsCommutator & commutator)
 {
   df::TileKey const key(1, 2, 15);
-  return {key, make_ref(&commutator), nullptr, nullptr, {}, false, false, false, 0, dp::BackgroundMode::Default, 1.0f};
+  return {key, make_ref(&commutator), nullptr, nullptr, {}, false, false, false, {}, 0, dp::BackgroundMode::Default,
+          1.0f};
 }
 
 df::TMapShapes MakeShapes(size_t begin, size_t count, size_t & destroyed)

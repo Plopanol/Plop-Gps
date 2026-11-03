@@ -112,6 +112,7 @@ set(SRC
   line_shape_helper.hpp
   map_data_provider.cpp
   map_data_provider.hpp
+  map_features_filter.hpp
   map_shape.hpp
   message.cpp
   message.hpp

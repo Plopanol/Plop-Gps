@@ -108,6 +108,7 @@ public:
     NotifyRenderThread,
     NotifyGraphicsReady,
     EnableIsolines,
+    SetMapFeaturesFilter,
     OnEnterBackground,
     Arrow3dRecache,
     VisualScaleChanged,

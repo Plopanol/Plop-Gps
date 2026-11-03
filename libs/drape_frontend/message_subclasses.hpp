@@ -8,6 +8,7 @@
 #include "drape_frontend/gps_track_point.hpp"
 #include "drape_frontend/gui/layer_render.hpp"
 #include "drape_frontend/gui/skin.hpp"
+#include "drape_frontend/map_features_filter.hpp"
 #include "drape_frontend/message.hpp"
 #include "drape_frontend/my_position.hpp"
 #include "drape_frontend/overlay_batcher.hpp"
@@ -1175,6 +1176,19 @@ public:
 
 private:
   bool m_isEnabled = false;
+};
+
+class SetMapFeaturesFilterMessage : public Message
+{
+public:
+  explicit SetMapFeaturesFilterMessage(MapFeaturesFilter const & filter) : m_filter(filter) {}
+
+  Type GetType() const override { return Type::SetMapFeaturesFilter; }
+
+  MapFeaturesFilter const & GetFilter() const { return m_filter; }
+
+private:
+  MapFeaturesFilter const m_filter;
 };
 
 class EnableTransitSchemeMessage : public Message

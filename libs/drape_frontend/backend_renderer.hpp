@@ -7,6 +7,7 @@
 #include "drape_frontend/drape_engine_params.hpp"
 #include "drape_frontend/gui/layer_render.hpp"
 #include "drape_frontend/map_data_provider.hpp"
+#include "drape_frontend/map_features_filter.hpp"
 #include "drape_frontend/overlay_batcher.hpp"
 #include "drape_frontend/requested_tiles.hpp"
 #include "drape_frontend/traffic_generator.hpp"
@@ -44,8 +45,8 @@ public:
            ref_ptr<dp::GraphicsContextFactory> factory, ref_ptr<dp::TextureManager> texMng,
            MapDataProvider const & model, TUpdateCurrentCountryFn const & updateCurrentCountryFn,
            ref_ptr<RequestedTiles> requestedTiles, bool allow3dBuildings, bool trafficEnabled, bool isolinesEnabled,
-           bool simplifiedTrafficColors, dp::BackgroundMode backgroundMode, float satelliteAreaOpacity,
-           std::optional<Arrow3dCustomDecl> arrow3dCustomDecl,
+           MapFeaturesFilter const & mapFeaturesFilter, bool simplifiedTrafficColors, dp::BackgroundMode backgroundMode,
+           float satelliteAreaOpacity, std::optional<Arrow3dCustomDecl> arrow3dCustomDecl,
            OnGraphicsContextInitialized const & onGraphicsContextInitialized)
       : BaseRenderer::Params(apiVersion, commutator, factory, texMng, onGraphicsContextInitialized)
       , m_model(model)
@@ -54,6 +55,7 @@ public:
       , m_allow3dBuildings(allow3dBuildings)
       , m_trafficEnabled(trafficEnabled)
       , m_isolinesEnabled(isolinesEnabled)
+      , m_mapFeaturesFilter(mapFeaturesFilter)
       , m_simplifiedTrafficColors(simplifiedTrafficColors)
       , m_backgroundMode(backgroundMode)
       , m_satelliteAreaOpacity(satelliteAreaOpacity)
@@ -66,6 +68,7 @@ public:
     bool m_allow3dBuildings;
     bool m_trafficEnabled;
     bool m_isolinesEnabled;
+    MapFeaturesFilter m_mapFeaturesFilter;
     bool m_simplifiedTrafficColors;
     dp::BackgroundMode m_backgroundMode;
     float m_satelliteAreaOpacity;

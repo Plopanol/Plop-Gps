@@ -10,6 +10,7 @@
 #include "indexer/feature_algo.hpp"
 #include "indexer/feature_visibility.hpp"
 #include "indexer/map_style_reader.hpp"
+#include "indexer/poi_category.hpp"
 
 #include "geometry/clipping.hpp"
 #include "geometry/mercator.hpp"
@@ -27,6 +28,7 @@
 
 #include <array>
 #include <functional>
+#include <optional>
 #include <vector>
 
 namespace df
@@ -404,8 +406,19 @@ void RuleDrawer::operator()(FeatureType & f)
     return;
 
   feature::TypesHolder const types(f);
+  auto const & filter = m_context->GetMapFeaturesFilter();
   if ((!m_context->IsolinesEnabled() && m_isIsoline(types)) ||
-      (!m_context->Is3dBuildingsEnabled() && m_isBuildingPart(types) && !m_isBuilding(types)))
+      ((!m_context->Is3dBuildingsEnabled() || !filter.m_buildingsEnabled) && m_isBuildingPart(types) &&
+       !m_isBuilding(types)))
+    return;
+
+  std::optional<ftypes::PoiCategory> poiCategory;
+  if (filter.m_hiddenPoiCategories != 0 || !filter.m_buildingsEnabled)
+    poiCategory = ftypes::PoiCategoryClassifier::Instance().Get(types);
+  bool const hidePoi = poiCategory && filter.IsPoiCategoryHidden(*poiCategory);
+  bool const hideBuilding = !filter.m_buildingsEnabled && m_isBuilding(types) && !m_isBridgeOrTunnel(types);
+  // A building without any other POI type has nothing left to draw.
+  if (hideBuilding && !poiCategory)
     return;
 
   if (m_isCoastline(types) && !CheckCoastlines(f))
@@ -423,7 +436,19 @@ void RuleDrawer::operator()(FeatureType & f)
       style = MapStyleIsDark(m_mapStyle) ? MapStyleOutdoorsDark : MapStyleOutdoorsLight;
   }
 
-  Stylist const s(f, m_zoomLevel, m_deviceLang, style);
+  Stylist s(f, m_zoomLevel, m_deviceLang, style);
+  if (hidePoi)
+  {
+    // Area fills (parks, parkings, etc.) are kept, only icons and labels are hidden.
+    s.m_symbolRule = nullptr;
+    s.m_captionRule = nullptr;
+  }
+  if (hideBuilding)
+  {
+    s.m_areaRule = nullptr;
+    s.m_hatchingRule = nullptr;
+    s.m_houseNumberRule = nullptr;
+  }
 
   // No drawing rules.
   if (!s.m_symbolRule && !s.m_captionRule && !s.m_houseNumberRule && s.m_lineRules.empty() && !s.m_areaRule &&

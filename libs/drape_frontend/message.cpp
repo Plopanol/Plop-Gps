@@ -108,6 +108,7 @@ std::string_view DebugPrint(Message::Type msgType)
   case Message::Type::NotifyGraphicsReady: return "NotifyGraphicsReady";
   case Message::Type::ScenarioViewport: return "ScenarioViewport";
   case Message::Type::EnableIsolines: return "EnableIsolines";
+  case Message::Type::SetMapFeaturesFilter: return "SetMapFeaturesFilter";
   case Message::Type::OnEnterBackground: return "OnEnterBackground";
   case Message::Type::Arrow3dRecache: return "Arrow3dRecache";
   case Message::Type::VisualScaleChanged: return "VisualScaleChanged";

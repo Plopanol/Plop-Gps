@@ -33,7 +33,8 @@ class ReadManager
 {
 public:
   ReadManager(ref_ptr<ThreadsCommutator> commutator, MapDataProvider & model, bool allow3dBuildings,
-              bool trafficEnabled, bool isolinesEnabled, dp::BackgroundMode backgroundMode, float areaOpacity);
+              bool trafficEnabled, bool isolinesEnabled, MapFeaturesFilter const & mapFeaturesFilter,
+              dp::BackgroundMode backgroundMode, float areaOpacity);
 
   void Start();
   void Stop();
@@ -57,6 +58,7 @@ public:
 
   void SetTrafficEnabled(bool trafficEnabled);
   void SetIsolinesEnabled(bool isolinesEnabled);
+  void SetMapFeaturesFilter(MapFeaturesFilter const & filter);
   void SetBackgroundMode(dp::BackgroundMode mode, float areaOpacity);
 
   void SetCustomFeatures(CustomFeatures && ids);
@@ -88,6 +90,7 @@ private:
   bool m_allow3dBuildings;
   bool m_trafficEnabled;
   bool m_isolinesEnabled;
+  MapFeaturesFilter m_mapFeaturesFilter;
   bool m_modeChanged;
   int8_t m_mapLangIndex;
   dp::BackgroundMode m_backgroundMode = dp::BackgroundMode::Default;

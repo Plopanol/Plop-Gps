@@ -55,7 +55,8 @@ public:
     Params(dp::ApiVersion apiVersion, ref_ptr<dp::GraphicsContextFactory> factory, dp::Viewport const & viewport,
            MapDataProvider const & model, Hints const & hints, double vs, double fontsScaleFactor,
            gui::TWidgetsInitInfo && info, location::TMyPositionModeChanged && myPositionModeChanged,
-           bool allow3dBuildings, bool trafficEnabled, bool isolinesEnabled, bool blockTapEvents,
+           bool allow3dBuildings, bool trafficEnabled, bool isolinesEnabled,
+           MapFeaturesFilter const & mapFeaturesFilter, bool blockTapEvents,
            bool showChoosePositionMark, std::vector<m2::TriangleD> && boundAreaTriangles, bool isRoutingActive,
            bool isAutozoomEnabled, bool simplifiedTrafficColors, dp::BackgroundMode backgroundMode,
            float satelliteAreaOpacity, std::optional<Arrow3dCustomDecl> arrow3dCustomDecl,
@@ -74,6 +75,7 @@ public:
       , m_allow3dBuildings(allow3dBuildings)
       , m_trafficEnabled(trafficEnabled)
       , m_isolinesEnabled(isolinesEnabled)
+      , m_mapFeaturesFilter(mapFeaturesFilter)
       , m_blockTapEvents(blockTapEvents)
       , m_showChoosePositionMark(showChoosePositionMark)
       , m_boundAreaTriangles(std::move(boundAreaTriangles))
@@ -101,6 +103,7 @@ public:
     bool m_allow3dBuildings;
     bool m_trafficEnabled;
     bool m_isolinesEnabled;
+    MapFeaturesFilter m_mapFeaturesFilter;
     bool m_blockTapEvents;
     bool m_showChoosePositionMark;
     std::vector<m2::TriangleD> m_boundAreaTriangles;
@@ -229,6 +232,7 @@ public:
   void HideRouteTransit();
 
   void EnableIsolines(bool enable);
+  void SetMapFeaturesFilter(MapFeaturesFilter const & filter);
 
   void SetFontScaleFactor(double scaleFactor);
 
