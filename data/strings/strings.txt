@@ -26894,6 +26894,42 @@ es = Frase de alerta de radar
 fr = Phrase d'alerte radar
 it = Frase di avviso autovelox
 
+[pref_gps_update_interval_title]
+comment = Settings list: how often the GPS position is requested while following, navigating or recording a track
+tags = android-app
+en = GPS update interval
+de = GPS-Aktualisierungsintervall
+es = Intervalo de actualización del GPS
+fr = Intervalle de mise à jour du GPS
+it = Intervallo di aggiornamento GPS
+
+[pref_gps_update_interval_description]
+comment = Description of the GPS update interval setting
+tags = android-app
+en = Longer intervals save battery but make the position less smooth.
+de = Längere Intervalle sparen Akku, machen die Position aber weniger flüssig.
+es = Intervalos más largos ahorran batería, pero la posición es menos fluida.
+fr = Un intervalle plus long économise la batterie mais rend la position moins fluide.
+it = Intervalli più lunghi risparmiano batteria ma rendono la posizione meno fluida.
+
+[pref_keep_screen_on_navigation_title]
+comment = Settings switch: keep the screen on during navigation
+tags = android-app
+en = Keep the screen on while navigating
+de = Bildschirm während der Navigation eingeschaltet lassen
+es = Mantener la pantalla encendida al navegar
+fr = Garder l'écran allumé pendant la navigation
+it = Mantieni lo schermo acceso durante la navigazione
+
+[pref_keep_screen_on_navigation_description]
+comment = Description of the keep screen on during navigation setting
+tags = android-app
+en = Turn off to save battery. Voice instructions keep working with the screen off.
+de = Zum Akkusparen ausschalten. Sprachanweisungen funktionieren auch bei ausgeschaltetem Bildschirm.
+es = Desactívalo para ahorrar batería. Las instrucciones de voz siguen funcionando con la pantalla apagada.
+fr = Désactivez pour économiser la batterie. Les instructions vocales fonctionnent écran éteint.
+it = Disattiva per risparmiare batteria. Le istruzioni vocali funzionano anche a schermo spento.
+
 [place_description_title]
 tags = android-app,apple-maps
 en = Place Description
