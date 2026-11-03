@@ -30,17 +30,16 @@ import org.chromium.base.ObserverList;
 
 public class LocationHelper implements BaseLocationProvider.Listener
 {
-  // Replaced 0 with 100ms. Seems like it is not working on Lineage, EOS, MicroG, ...
+  // The follow, navigation and track recording interval is user-configurable (Config.getGpsUpdateIntervalMs()).
+  // 0 is not supported on Lineage, EOS, MicroG, ..., so the shortest option is 100ms.
   // https://github.com/organicmaps/organicmaps/issues/11076
   // Probably https://github.com/organicmaps/organicmaps/issues/10133
   // Probably https://github.com/organicmaps/organicmaps/issues/9018
-  private static final long INTERVAL_FOLLOW_MS = 100;
   private static final long INTERVAL_NOT_FOLLOW_MS = 3000;
-  private static final long INTERVAL_NAVIGATION_MS = 100;
-  private static final long INTERVAL_TRACK_RECORDING = 100;
   // Driving without navigation: speed and speed camera alerts need frequent fixes.
   private static final long INTERVAL_FREE_DRIVE_MS = 1000;
-  private static final long FREE_DRIVE_TIMEOUT_MS = 30_000;
+  // Long enough to not restart the provider at every traffic light.
+  private static final long FREE_DRIVE_TIMEOUT_MS = 120_000;
   // ~5 km/h.
   public static final float FREE_DRIVE_MIN_SPEED_MPS = 1.4f;
 
@@ -355,16 +354,14 @@ public class LocationHelper implements BaseLocationProvider.Listener
 
   private long calcLocationUpdatesInterval()
   {
-    if (RoutingController.get().isNavigating())
-      return INTERVAL_NAVIGATION_MS;
-
-    if (TrackRecorder.nativeIsTrackRecordingEnabled())
-      return INTERVAL_TRACK_RECORDING;
+    final long configuredIntervalMs = Config.getGpsUpdateIntervalMs();
+    if (RoutingController.get().isNavigating() || TrackRecorder.nativeIsTrackRecordingEnabled())
+      return configuredIntervalMs;
 
     final int mode = Map.isEngineCreated() ? LocationState.getMode() : LocationState.NOT_FOLLOW_NO_POSITION;
     return switch (mode)
     {
-      case LocationState.PENDING_POSITION, LocationState.FOLLOW, LocationState.FOLLOW_AND_ROTATE -> INTERVAL_FOLLOW_MS;
+      case LocationState.PENDING_POSITION, LocationState.FOLLOW, LocationState.FOLLOW_AND_ROTATE -> configuredIntervalMs;
       case LocationState.NOT_FOLLOW, LocationState.NOT_FOLLOW_NO_POSITION ->
         isFreeDriving() ? INTERVAL_FREE_DRIVE_MS : INTERVAL_NOT_FOLLOW_MS;
       default -> throw new IllegalArgumentException("Unsupported location mode: " + mode);

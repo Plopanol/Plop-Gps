@@ -1086,7 +1086,9 @@ public class MwmActivity extends BaseMwmFragmentActivity
     RoutingController.get().applyPendingRoutingOptions();
     LocationState.nativeSetListener(this);
     MwmApplication.from(this).getLocationHelper().addListener(this);
-    Utils.keepScreenOn(Config.isKeepScreenOnEnabled() || RoutingController.get().isNavigating(), getWindow());
+    Utils.keepScreenOn(Config.isKeepScreenOnEnabled()
+                           || (RoutingController.get().isNavigating() && Config.isKeepScreenOnInNavigationEnabled()),
+                       getWindow());
     mNavigationController.onStart();
   }
 
@@ -1398,7 +1400,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
     {
       ThemeSwitcher.INSTANCE.synchronizeApplicationTheme();
       ThemeSwitcher.INSTANCE.synchronizeMapStyle(this, mMapController.isRenderingActive());
-      Utils.keepScreenOn(true, getWindow());
+      Utils.keepScreenOn(Config.isKeepScreenOnEnabled() || Config.isKeepScreenOnInNavigationEnabled(), getWindow());
     }
     mMapButtonsViewModel.setLayoutMode(layoutMode);
     refreshLightStatusBar();
@@ -1423,7 +1425,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
     requestPostNotificationsPermission();
     NavigationService.startForegroundService(this);
-    Utils.keepScreenOn(true, getWindow());
+    Utils.keepScreenOn(Config.isKeepScreenOnEnabled() || Config.isKeepScreenOnInNavigationEnabled(), getWindow());
   }
 
   @Override

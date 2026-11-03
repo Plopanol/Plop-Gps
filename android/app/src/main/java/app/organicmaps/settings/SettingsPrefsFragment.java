@@ -74,6 +74,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
     initEmulationBadStorage();
     initUseMobileDataPrefsCallbacks();
     initPowerManagementPrefsCallbacks();
+    initGpsUpdateIntervalPrefsCallbacks();
     initBookmarksTextPlacementPrefsCallbacks();
     initShowDownloadedRegionsPrefsCallbacks();
     initPlayServicesPrefsCallbacks();
@@ -255,6 +256,24 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
       disableOrEnable3DBuildingsForPowerMode(scheme);
 
       return true;
+    });
+  }
+
+  private void initGpsUpdateIntervalPrefsCallbacks()
+  {
+    final ListPreference intervalPref = getPreference(getString(R.string.pref_gps_update_interval));
+    intervalPref.setValue(String.valueOf(Config.getGpsUpdateIntervalMs()));
+    intervalPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+      @SuppressLint("MissingPermission")
+      @Override
+      public boolean onPreferenceChange(@NonNull Preference preference, Object newValue)
+      {
+        Config.setGpsUpdateIntervalMs(Integer.parseInt((String) newValue));
+        final LocationHelper locationHelper = MwmApplication.from(requireContext()).getLocationHelper();
+        if (locationHelper.isActive())
+          locationHelper.restartWithNewMode();
+        return true;
+      }
     });
   }
 
@@ -617,6 +636,13 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment implements La
         Config.setKeepScreenOnEnabled(newVal);
         // No need to call Utils.keepScreenOn() here, as relevant activities do it when starting / stopping.
       }
+      return true;
+    });
+
+    final Preference navigationPref = getPreference(getString(R.string.pref_keep_screen_on_navigation));
+    ((TwoStatePreference) navigationPref).setChecked(Config.isKeepScreenOnInNavigationEnabled());
+    navigationPref.setOnPreferenceChangeListener((preference, newValue) -> {
+      Config.setKeepScreenOnInNavigationEnabled((Boolean) newValue);
       return true;
     });
   }

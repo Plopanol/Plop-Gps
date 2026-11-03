@@ -83,7 +83,8 @@ public class AndroidNativeProvider extends BaseLocationProvider
         new LocationRequestCompat
             .Builder(interval)
             // The quality is a hint to providers on how they should weigh power vs accuracy tradeoffs.
-            .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
+            .setQuality(isHighAccuracyRequired(interval) ? LocationRequestCompat.QUALITY_HIGH_ACCURACY
+                                                         : LocationRequestCompat.QUALITY_BALANCED_POWER_ACCURACY)
             .build();
 
     // API 31+ provides `fused` provider which aggregates `gps` and `network` and potentially other sensors as well.

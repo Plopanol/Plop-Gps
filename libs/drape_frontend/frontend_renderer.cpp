@@ -2012,10 +2012,10 @@ void FrontendRenderer::RenderFrame()
 #endif
 #endif
 
-  // Limit fps in following mode.
+  // Limit fps of all active frames to save battery.
   double constexpr kFrameTime = 1.0 / 30.0;
   auto const ft = m_frameData.m_timer.ElapsedSeconds();
-  if (!canSuspend && ft < kFrameTime && m_myPositionController->IsRouteFollowingActive())
+  if (!canSuspend && ft < kFrameTime)
   {
     auto const ms = static_cast<uint32_t>((kFrameTime - ft) * 1000);
     std::this_thread::sleep_for(std::chrono::milliseconds(ms));

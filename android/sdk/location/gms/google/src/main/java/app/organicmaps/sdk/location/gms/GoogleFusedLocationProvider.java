@@ -71,12 +71,14 @@ class GoogleFusedLocationProvider extends BaseLocationProvider
   {
     Logger.d(TAG);
 
+    final boolean highAccuracy = isHighAccuracyRequired(interval);
     final LocationRequest locationRequest =
         new LocationRequest
-            .Builder(Priority.PRIORITY_HIGH_ACCURACY, interval)
+            .Builder(highAccuracy ? Priority.PRIORITY_HIGH_ACCURACY : Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                     interval)
             // Wait a few seconds for accurate locations initially, when accurate locations could not be computed on the
             // device immediately. https://github.com/organicmaps/organicmaps/issues/2149
-            .setWaitForAccurateLocation(true)
+            .setWaitForAccurateLocation(highAccuracy)
             // The desired location granularity should correspond to the client permission level. The client will be
             // delivered fine locations while it has the Manifest.permission.ACCESS_FINE_LOCATION permission, coarse
             // locations while it has only the Manifest.permission.ACCESS_COARSE_LOCATION permission, and no location

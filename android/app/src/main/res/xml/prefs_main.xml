@@ -119,12 +119,27 @@
       android:entries="@array/bookmarks_text_placement_options"
       android:entryValues="@array/bookmarks_text_placement_values"
       android:order="18" />
+    <ListPreference
+      android:key="@string/pref_gps_update_interval"
+      android:title="@string/pref_gps_update_interval_title"
+      app:singleLineTitle="false"
+      android:summary="@string/pref_gps_update_interval_description"
+      android:entries="@array/gps_update_interval_options"
+      android:entryValues="@array/gps_update_interval_values"
+      android:order="19" />
     <SwitchPreferenceCompat
       android:key="@string/pref_keep_screen_on"
       android:title="@string/enable_keep_screen_on"
       app:singleLineTitle="false"
       android:summary="@string/enable_keep_screen_on_description"
       android:defaultValue="false"
+      android:order="19"/>
+    <SwitchPreferenceCompat
+      android:key="@string/pref_keep_screen_on_navigation"
+      android:title="@string/pref_keep_screen_on_navigation_title"
+      app:singleLineTitle="false"
+      android:summary="@string/pref_keep_screen_on_navigation_description"
+      android:defaultValue="true"
       android:order="19"/>
     <SwitchPreferenceCompat
       android:key="@string/pref_show_on_lock_screen"

@@ -27,8 +27,16 @@ public abstract class BaseLocationProvider
     void onFusedLocationUnsupported();
   }
 
+  // Requests at this interval or slower (browsing the map, not following) don't need GPS-grade accuracy.
+  private static final long BALANCED_POWER_MIN_INTERVAL_MS = 3000;
+
   @NonNull
   protected final Listener mListener;
+
+  protected static boolean isHighAccuracyRequired(long interval)
+  {
+    return interval < BALANCED_POWER_MIN_INTERVAL_MS;
+  }
 
   protected BaseLocationProvider(@NonNull Listener listener)
   {

@@ -40,6 +40,9 @@ public final class Config
   private static final String KEY_MISC_USE_MOBILE_DATA_TIMESTAMP = "UseMobileDataTimestamp";
   private static final String KEY_MISC_USE_MOBILE_DATA_ROAMING = "UseMobileDataRoaming";
   private static final String KEY_MISC_KEEP_SCREEN_ON = "KeepScreenOn";
+  private static final String KEY_MISC_KEEP_SCREEN_ON_NAVIGATION = "KeepScreenOnNavigation";
+  private static final String KEY_MISC_GPS_UPDATE_INTERVAL = "GpsUpdateIntervalMs";
+  public static final int DEFAULT_GPS_UPDATE_INTERVAL_MS = 1000;
   private static final String KEY_MISC_NOW_PLAYING = "NowPlaying";
 
   private static final String KEY_MISC_SHOW_ON_LOCK_SCREEN = "ShowOnLockScreen";
@@ -194,6 +197,26 @@ public final class Config
   public static void setStatisticsEnabled(boolean enabled)
   {
     setBool(KEY_PREF_STATISTICS, enabled);
+  }
+
+  public static int getGpsUpdateIntervalMs()
+  {
+    return getInt(KEY_MISC_GPS_UPDATE_INTERVAL, DEFAULT_GPS_UPDATE_INTERVAL_MS);
+  }
+
+  public static void setGpsUpdateIntervalMs(int intervalMs)
+  {
+    setInt(KEY_MISC_GPS_UPDATE_INTERVAL, intervalMs);
+  }
+
+  public static boolean isKeepScreenOnInNavigationEnabled()
+  {
+    return getBool(KEY_MISC_KEEP_SCREEN_ON_NAVIGATION, true);
+  }
+
+  public static void setKeepScreenOnInNavigationEnabled(boolean enabled)
+  {
+    setBool(KEY_MISC_KEEP_SCREEN_ON_NAVIGATION, enabled);
   }
 
   public static boolean isKeepScreenOnEnabled()

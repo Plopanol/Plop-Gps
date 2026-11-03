@@ -47,6 +47,8 @@
   <string name="pref_bookmarks_text_placement" translatable="false">BookmarksTextPlacement</string>
   <string name="pref_show_downloaded_regions" translatable="false">ShowDownloadedRegions</string>
   <string name="pref_keep_screen_on" translatable="false">KeepScreenOn</string>
+  <string name="pref_keep_screen_on_navigation" translatable="false">KeepScreenOnNavigation</string>
+  <string name="pref_gps_update_interval" translatable="false">GpsUpdateIntervalMs</string>
   <string name="pref_now_playing" translatable="false">NowPlaying</string>
   <string name="pref_show_on_lock_screen" translatable="false">ShowOnLockScreen</string>
   <string name="pref_map_locale" translatable="false">MapLanguage</string>

@@ -141,7 +141,7 @@ public class SensorHelper implements SensorEventListener
     }
 
     Logger.d(TAG);
-    mSensorManager.registerListener(this, mRotationVectorSensor, SensorManager.SENSOR_DELAY_UI);
+    mSensorManager.registerListener(this, mRotationVectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
   }
 
   public void stop()
