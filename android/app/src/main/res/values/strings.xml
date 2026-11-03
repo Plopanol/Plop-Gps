@@ -652,6 +652,14 @@
     <string name="pref_tts_speed_cam_phrase_title">Replace the beep with a phrase</string>
     <!-- Settings text field: the phrase spoken as speed camera alert -->
     <string name="pref_tts_speed_cam_phrase_text_title">Speed camera alert phrase</string>
+    <!-- Settings list: how often the GPS position is requested while following, navigating or recording a track -->
+    <string name="pref_gps_update_interval_title">GPS update interval</string>
+    <!-- Description of the GPS update interval setting -->
+    <string name="pref_gps_update_interval_description">Longer intervals save battery but make the position less smooth.</string>
+    <!-- Settings switch: keep the screen on during navigation -->
+    <string name="pref_keep_screen_on_navigation_title">Keep the screen on while navigating</string>
+    <!-- Description of the keep screen on during navigation setting -->
+    <string name="pref_keep_screen_on_navigation_description">Turn off to save battery. Voice instructions keep working with the screen off.</string>
     <string name="place_description_title">Place Description</string>
     <!-- this text will be shown in application notification preferences opposite checkbox which enable/disable downloader notifications. Devices on Android 8+ are affected. -->
     <string name="notification_channel_downloader">Map downloader</string>

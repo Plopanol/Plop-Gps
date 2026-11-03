@@ -659,6 +659,14 @@
     <string name="pref_tts_speed_cam_phrase_title">Reemplazar el pitido por una frase</string>
     <!-- Settings text field: the phrase spoken as speed camera alert -->
     <string name="pref_tts_speed_cam_phrase_text_title">Frase de alerta de radar</string>
+    <!-- Settings list: how often the GPS position is requested while following, navigating or recording a track -->
+    <string name="pref_gps_update_interval_title">Intervalo de actualización del GPS</string>
+    <!-- Description of the GPS update interval setting -->
+    <string name="pref_gps_update_interval_description">Intervalos más largos ahorran batería, pero la posición es menos fluida.</string>
+    <!-- Settings switch: keep the screen on during navigation -->
+    <string name="pref_keep_screen_on_navigation_title">Mantener la pantalla encendida al navegar</string>
+    <!-- Description of the keep screen on during navigation setting -->
+    <string name="pref_keep_screen_on_navigation_description">Desactívalo para ahorrar batería. Las instrucciones de voz siguen funcionando con la pantalla apagada.</string>
     <string name="place_description_title">Descripción del lugar</string>
     <!-- this text will be shown in application notification preferences opposite checkbox which enable/disable downloader notifications. Devices on Android 8+ are affected. -->
     <string name="notification_channel_downloader">Descargar mapas</string>
