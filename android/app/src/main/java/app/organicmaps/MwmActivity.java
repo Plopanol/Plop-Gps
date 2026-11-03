@@ -121,6 +121,7 @@ import app.organicmaps.util.Utils;
 import app.organicmaps.util.WindowInsetUtils.BaselinePaddingInsetsListener;
 import app.organicmaps.util.bottomsheet.MenuBottomSheetFragment;
 import app.organicmaps.util.bottomsheet.MenuBottomSheetItem;
+import app.organicmaps.widget.FreeDriveSpeedController;
 import app.organicmaps.widget.placepage.PlacePageController;
 import app.organicmaps.widget.placepage.PlacePageViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -163,6 +164,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
   private TextView mPointChooserHint;
 
   private NavigationController mNavigationController;
+  private FreeDriveSpeedController mFreeDriveSpeedController;
   @Nullable
   private OnmapDownloader mOnmapDownloader;
 
@@ -645,6 +647,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
     mNavigationController = new NavigationController(
         this, v -> onSettingsOptionSelected(), v -> openVoiceInstructionsSettings(), this::updateBottomWidgetsOffset);
+    mFreeDriveSpeedController = new FreeDriveSpeedController(findViewById(R.id.coordinator));
     // TrafficManager.INSTANCE.attach(mNavigationController);
     initOnmapDownloader();
     initPositionChooser();
@@ -1404,6 +1407,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
   @Override
   public void onNavigationStarted()
   {
+    mFreeDriveSpeedController.hide();
     closeFloatingToolbarsAndPanels();
     ThemeSwitcher.INSTANCE.synchronizeApplicationTheme();
     ThemeSwitcher.INSTANCE.synchronizeMapStyle(this, mMapController.isRenderingActive());
@@ -1657,7 +1661,10 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
     final RoutingController routing = RoutingController.get();
     if (!routing.isNavigating())
+    {
+      mFreeDriveSpeedController.update(location);
       return;
+    }
 
     mNavigationController.update(Framework.nativeGetRouteFollowingInfo());
   }

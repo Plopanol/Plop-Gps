@@ -1314,6 +1314,11 @@ JNIEXPORT void Java_app_organicmaps_sdk_Framework_nativeSetSpeedCameraZoneListen
   });
 }
 
+JNIEXPORT jdouble Java_app_organicmaps_sdk_Framework_nativeGetFreeDriveSpeedLimitMps(JNIEnv *, jclass)
+{
+  return frm()->GetRoutingManager().GetFreeDriveSpeedLimitMps();
+}
+
 JNIEXPORT jobject Java_app_organicmaps_sdk_Framework_nativeGetRouteFollowingInfo(JNIEnv * env, jclass)
 {
   RoutingManager & rm = frm()->GetRoutingManager();

@@ -237,6 +237,10 @@ public class Framework
   @Nullable
   public static native RoutingInfo nativeGetRouteFollowingInfo();
 
+  /// Speed limit in m/s of the road driven without a route: > 0 known, 0 unlimited, < 0 unknown.
+  @FastNative
+  public static native double nativeGetFreeDriveSpeedLimitMps();
+
   @Nullable
   /// @param[in] maxDistM Max distance between points in meters.
   public static native JunctionInfo[] nativeGetRouteJunctionPoints(double maxDistM);

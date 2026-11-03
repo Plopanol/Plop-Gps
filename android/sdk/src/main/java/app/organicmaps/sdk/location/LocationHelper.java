@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
@@ -37,6 +38,11 @@ public class LocationHelper implements BaseLocationProvider.Listener
   private static final long INTERVAL_NOT_FOLLOW_MS = 3000;
   private static final long INTERVAL_NAVIGATION_MS = 100;
   private static final long INTERVAL_TRACK_RECORDING = 100;
+  // Driving without navigation: speed and speed camera alerts need frequent fixes.
+  private static final long INTERVAL_FREE_DRIVE_MS = 1000;
+  private static final long FREE_DRIVE_TIMEOUT_MS = 30_000;
+  // ~5 km/h.
+  public static final float FREE_DRIVE_MIN_SPEED_MPS = 1.4f;
 
   private static final long AGPS_EXPIRATION_TIME_MS = 16 * 60 * 60 * 1000; // 16 hours
   private static final long LOCATION_UPDATE_TIMEOUT_MS = 30 * 1000; // 30 seconds
@@ -61,6 +67,7 @@ public class LocationHelper implements BaseLocationProvider.Listener
   @Nullable
   private BaseLocationProvider mOldLocationProvider;
   private long mInterval;
+  private long mLastFreeDriveTimeMs = 0;
   private boolean mInFirstRun;
   private boolean mActive;
   private final Handler mHandler;
@@ -224,6 +231,22 @@ public class LocationHelper implements BaseLocationProvider.Listener
     mSavedLocation = location;
     mMyPosition = null;
     notifyLocationUpdated();
+    updateFreeDriveInterval(location);
+  }
+
+  @SuppressLint("MissingPermission") // Receiving location updates implies the permission is granted.
+  private void updateFreeDriveInterval(@NonNull Location location)
+  {
+    if (location.hasSpeed() && location.getSpeed() >= FREE_DRIVE_MIN_SPEED_MPS)
+      mLastFreeDriveTimeMs = SystemClock.elapsedRealtime();
+
+    if (calcLocationUpdatesInterval() != mInterval)
+      restartWithNewMode();
+  }
+
+  private boolean isFreeDriving()
+  {
+    return mLastFreeDriveTimeMs != 0 && SystemClock.elapsedRealtime() - mLastFreeDriveTimeMs < FREE_DRIVE_TIMEOUT_MS;
   }
 
   // Used by GoogleFusedLocationProvider.
@@ -342,7 +365,8 @@ public class LocationHelper implements BaseLocationProvider.Listener
     return switch (mode)
     {
       case LocationState.PENDING_POSITION, LocationState.FOLLOW, LocationState.FOLLOW_AND_ROTATE -> INTERVAL_FOLLOW_MS;
-      case LocationState.NOT_FOLLOW, LocationState.NOT_FOLLOW_NO_POSITION -> INTERVAL_NOT_FOLLOW_MS;
+      case LocationState.NOT_FOLLOW, LocationState.NOT_FOLLOW_NO_POSITION ->
+        isFreeDriving() ? INTERVAL_FREE_DRIVE_MS : INTERVAL_NOT_FOLLOW_MS;
       default -> throw new IllegalArgumentException("Unsupported location mode: " + mode);
     };
   }
