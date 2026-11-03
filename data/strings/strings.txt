@@ -26850,6 +26850,50 @@ es = Fin de la zona de peligro
 fr = Fin de zone de danger
 it = Fine della zona di pericolo
 
+[speed_camera_alert_default_phrase]
+comment = Default voice phrase spoken instead of the speed camera beep
+tags = android-libs-routing
+en = Speed camera ahead
+de = Achtung, Blitzer
+es = Atención, radar
+fr = Attention, radar
+it = Attenzione, autovelox
+
+[pref_tts_radars_only_title]
+comment = Settings switch: mute turn-by-turn voice instructions, keep speed camera alerts
+tags = android-app
+en = Silent mode
+de = Stiller Modus
+es = Modo silencioso
+fr = Mode silencieux
+it = Modalità silenziosa
+
+[pref_tts_radars_only_summary]
+tags = android-app
+en = Only speed camera alerts are announced
+de = Nur Blitzerwarnungen werden angesagt
+es = Solo se anuncian las alertas de radares
+fr = Seules les alertes radars sont annoncées
+it = Vengono annunciati solo gli avvisi autovelox
+
+[pref_tts_speed_cam_phrase_title]
+comment = Settings switch: speak a phrase instead of playing the speed camera beep
+tags = android-app
+en = Replace the beep with a phrase
+de = Signalton durch einen Satz ersetzen
+es = Reemplazar el pitido por una frase
+fr = Remplacer le bip par une phrase
+it = Sostituisci il segnale acustico con una frase
+
+[pref_tts_speed_cam_phrase_text_title]
+comment = Settings text field: the phrase spoken as speed camera alert
+tags = android-app
+en = Speed camera alert phrase
+de = Satz für die Blitzerwarnung
+es = Frase de alerta de radar
+fr = Phrase d'alerte radar
+it = Frase di avviso autovelox
+
 [place_description_title]
 tags = android-app,apple-maps
 en = Place Description
