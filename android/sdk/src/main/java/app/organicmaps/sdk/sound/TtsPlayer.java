@@ -317,6 +317,23 @@ public enum TtsPlayer
       stop();
   }
 
+  // Speaks all texts in order, without interrupting each other.
+  public void speak(@NonNull String... texts)
+  {
+    playTurnNotifications(texts);
+  }
+
+  // Speaks after the utterances already queued instead of interrupting them.
+  public void enqueue(@NonNull String text)
+  {
+    if (!isReady())
+      return;
+
+    final boolean result = mTtsQueueSize.get() > 0 ? addToQueue(text) : speakFirstString(text);
+    if (!result)
+      stop();
+  }
+
   public void playTurnNotifications(@NonNull String[] turnNotifications)
   {
     if (!isReady())
@@ -387,16 +404,22 @@ public enum TtsPlayer
 
   public static boolean isEnabled()
   {
-    return (isReady() && nativeAreTurnNotificationsEnabled());
+    return (isReady() && Config.TTS.isEnabled());
   }
 
   public static void setEnabled(boolean enabled)
   {
     final boolean wasEnabled = Config.TTS.isEnabled();
     Config.TTS.setEnabled(enabled);
-    nativeEnableTurnNotifications(enabled);
+    nativeEnableTurnNotifications(enabled && !Config.TTS.isRadarsOnly());
     if (wasEnabled != enabled)
       notifyStateChanged();
+  }
+
+  public static void setRadarsOnly(boolean radarsOnly)
+  {
+    Config.TTS.setRadarsOnly(radarsOnly);
+    nativeEnableTurnNotifications(Config.TTS.isEnabled() && !radarsOnly);
   }
 
   public float getVolume()
@@ -486,7 +509,6 @@ public enum TtsPlayer
   }
 
   private native static void nativeEnableTurnNotifications(boolean enable);
-  private native static boolean nativeAreTurnNotificationsEnabled();
   private native static void nativeSetTurnNotificationsLocale(String code);
   private native static String nativeGetTurnNotificationsLocale();
   @NonNull

@@ -12,11 +12,6 @@ JNIEXPORT void Java_app_organicmaps_sdk_sound_TtsPlayer_nativeEnableTurnNotifica
   return frm()->GetRoutingManager().EnableTurnNotifications(static_cast<bool>(enable));
 }
 
-JNIEXPORT jboolean Java_app_organicmaps_sdk_sound_TtsPlayer_nativeAreTurnNotificationsEnabled(JNIEnv *, jclass)
-{
-  return static_cast<jboolean>(frm()->GetRoutingManager().AreTurnNotificationsEnabled());
-}
-
 JNIEXPORT void Java_app_organicmaps_sdk_sound_TtsPlayer_nativeSetTurnNotificationsLocale(JNIEnv * env, jclass,
                                                                                          jstring jLocale)
 {

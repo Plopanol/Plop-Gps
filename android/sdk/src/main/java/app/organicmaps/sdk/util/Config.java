@@ -495,6 +495,9 @@ public final class Config
       String LANGUAGE = "TtsLanguage";
       String VOLUME = "TtsVolume";
       String STREETS = "TtsStreetNames";
+      String RADARS_ONLY = "TtsRadarsOnly";
+      String SPEED_CAM_PHRASE = "TtsSpeedCamPhrase";
+      String SPEED_CAM_PHRASE_TEXT = "TtsSpeedCamPhraseText";
     }
 
     public interface Defaults
@@ -547,6 +550,38 @@ public final class Config
     public static void setAnnounceStreets(boolean enabled)
     {
       setBool(Keys.STREETS, enabled);
+    }
+
+    // Silent mode: only speed camera alerts are announced, turn instructions are muted.
+    public static boolean isRadarsOnly()
+    {
+      return getBool(Keys.RADARS_ONLY, false);
+    }
+
+    public static void setRadarsOnly(boolean enabled)
+    {
+      setBool(Keys.RADARS_ONLY, enabled);
+    }
+
+    public static boolean isSpeedCamPhrase()
+    {
+      return getBool(Keys.SPEED_CAM_PHRASE, false);
+    }
+
+    public static void setSpeedCamPhrase(boolean enabled)
+    {
+      setBool(Keys.SPEED_CAM_PHRASE, enabled);
+    }
+
+    @NonNull
+    public static String getSpeedCamPhraseText()
+    {
+      return getString(Keys.SPEED_CAM_PHRASE_TEXT);
+    }
+
+    public static void setSpeedCamPhraseText(@NonNull String text)
+    {
+      setString(Keys.SPEED_CAM_PHRASE_TEXT, text);
     }
   }
 

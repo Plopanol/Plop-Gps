@@ -37,7 +37,6 @@ public final class SpeedCameraZoneAlert implements SpeedCameraZoneListener
       return;
     }
 
-    mPlayer.playback(R.raw.speed_cams_beep);
     final String text;
     if (isRedLight)
       text = mContext.getString(R.string.speed_camera_zone_red_light);
@@ -45,6 +44,14 @@ public final class SpeedCameraZoneAlert implements SpeedCameraZoneListener
       text = mContext.getString(R.string.speed_camera_zone_entered, maxSpeedKmph);
     else
       text = mContext.getString(R.string.speed_camera_zone_entered_no_limit);
+
+    final String phrase = SpeedCameraWarning.getPhrase(mContext);
+    if (phrase != null)
+    {
+      TtsPlayer.INSTANCE.speak(phrase, text);
+      return;
+    }
+    mPlayer.playback(R.raw.speed_cams_beep);
     TtsPlayer.INSTANCE.speak(text);
   }
 }

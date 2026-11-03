@@ -50,4 +50,20 @@
       android:entries="@array/speed_cameras"
       android:entryValues="@array/speed_cameras_values"
       android:defaultValue="@string/auto_enum_value" />
+  <SwitchPreferenceCompat
+      android:key="@string/pref_tts_radars_only"
+      android:title="@string/pref_tts_radars_only_title"
+      android:summary="@string/pref_tts_radars_only_summary"
+      app:singleLineTitle="false"
+      android:persistent="false" />
+  <SwitchPreferenceCompat
+      android:key="@string/pref_tts_speed_cam_phrase"
+      android:title="@string/pref_tts_speed_cam_phrase_title"
+      app:singleLineTitle="false"
+      android:persistent="false" />
+  <EditTextPreference
+      android:key="@string/pref_tts_speed_cam_phrase_text"
+      android:title="@string/pref_tts_speed_cam_phrase_text_title"
+      app:singleLineTitle="false"
+      android:persistent="false" />
 </androidx.preference.PreferenceScreen>

@@ -296,7 +296,13 @@ public class NavigationService extends Service implements LocationListener
       return;
 
     if (routingInfo.shouldPlayWarningSignal())
-      mPlayer.playback(R.raw.speed_cams_beep);
+    {
+      final String phrase = SpeedCameraWarning.getPhrase(this);
+      if (phrase != null)
+        TtsPlayer.INSTANCE.enqueue(phrase);
+      else
+        mPlayer.playback(R.raw.speed_cams_beep);
+    }
 
     // Don't spend time on updating RemoteView if notifications are not allowed.
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU

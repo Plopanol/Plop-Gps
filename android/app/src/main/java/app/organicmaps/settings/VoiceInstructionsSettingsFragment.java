@@ -18,11 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SeekBarPreference;
 import androidx.preference.TwoStatePreference;
 import app.organicmaps.R;
+import app.organicmaps.routing.SpeedCameraWarning;
 import app.organicmaps.sdk.Framework;
 import app.organicmaps.sdk.settings.SpeedCameraMode;
 import app.organicmaps.sdk.sound.LanguageData;
@@ -378,12 +380,47 @@ public class VoiceInstructionsSettingsFragment extends BaseXmlSettingsFragment
       final SpeedCameraMode newCamMode = SpeedCameraMode.valueOf(speedCamModeValue);
       final CharSequence summary = pref.getEntries()[newCamMode.ordinal()];
       pref.setSummary(summary);
+      updateSpeedCameraAlertPrefsVisibility(newCamMode);
       if (pref.getValue().equals(newValue))
         return true;
 
       onSpeedCamerasPrefChanged(newCamMode);
       return true;
     });
+
+    final TwoStatePreference radarsOnly = getPreference(getString(R.string.pref_tts_radars_only));
+    radarsOnly.setChecked(Config.TTS.isRadarsOnly());
+    radarsOnly.setOnPreferenceChangeListener((preference, newValue) -> {
+      TtsPlayer.setRadarsOnly((Boolean) newValue);
+      return true;
+    });
+
+    final TwoStatePreference phrase = getPreference(getString(R.string.pref_tts_speed_cam_phrase));
+    phrase.setChecked(Config.TTS.isSpeedCamPhrase());
+    phrase.setOnPreferenceChangeListener((preference, newValue) -> {
+      Config.TTS.setSpeedCamPhrase((Boolean) newValue);
+      return true;
+    });
+
+    final EditTextPreference phraseText = getPreference(getString(R.string.pref_tts_speed_cam_phrase_text));
+    phraseText.setDependency(getString(R.string.pref_tts_speed_cam_phrase));
+    phraseText.setText(SpeedCameraWarning.getPhraseText(requireContext()));
+    phraseText.setSummaryProvider(preference -> SpeedCameraWarning.getPhraseText(requireContext()));
+    phraseText.setOnPreferenceChangeListener((preference, newValue) -> {
+      Config.TTS.setSpeedCamPhraseText((String) newValue);
+      phraseText.setText(SpeedCameraWarning.getPhraseText(requireContext()));
+      return false;
+    });
+
+    updateSpeedCameraAlertPrefsVisibility(SpeedCameraMode.valueOf(pref.getValue()));
+  }
+
+  private void updateSpeedCameraAlertPrefsVisibility(@NonNull SpeedCameraMode mode)
+  {
+    final boolean visible = mode != SpeedCameraMode.NEVER;
+    getPreference(getString(R.string.pref_tts_radars_only)).setVisible(visible);
+    getPreference(getString(R.string.pref_tts_speed_cam_phrase)).setVisible(visible);
+    getPreference(getString(R.string.pref_tts_speed_cam_phrase_text)).setVisible(visible);
   }
 
   private void onSpeedCamerasPrefChanged(@NonNull SpeedCameraMode newCamMode)

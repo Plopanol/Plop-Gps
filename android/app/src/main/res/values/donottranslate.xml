@@ -26,6 +26,9 @@
   <string name="pref_tts_info" translatable="false">TtsInfo</string>
   <string name="pref_tts_info_link" translatable="false">TtsInfoLink</string>
   <string name="pref_tts_speed_cameras" translatable="false">SpeedCameras</string>
+  <string name="pref_tts_radars_only" translatable="false">TtsRadarsOnly</string>
+  <string name="pref_tts_speed_cam_phrase" translatable="false">TtsSpeedCamPhrase</string>
+  <string name="pref_tts_speed_cam_phrase_text" translatable="false">TtsSpeedCamPhraseText</string>
   <string name="prefs_routing" translatable="false">RoutingOptions</string>
   <string name="pref_autodownload" translatable="false">AutoDownloadMap</string>
   <string name="pref_3d" translatable="false">3D</string>
