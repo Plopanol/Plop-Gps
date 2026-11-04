@@ -67,6 +67,7 @@ import app.organicmaps.location.TrackRecordingService;
 import app.organicmaps.maplayer.MapButtonsController;
 import app.organicmaps.maplayer.MapButtonsViewModel;
 import app.organicmaps.maplayer.ToggleMapLayerFragment;
+import app.organicmaps.media.MapNowPlayingController;
 import app.organicmaps.routing.NavigationController;
 import app.organicmaps.routing.NavigationService;
 import app.organicmaps.routing.RoutePointLabels;
@@ -165,6 +166,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
   private NavigationController mNavigationController;
   private FreeDriveSpeedController mFreeDriveSpeedController;
+  private MapNowPlayingController mMapNowPlayingController;
   @Nullable
   private OnmapDownloader mOnmapDownloader;
 
@@ -648,6 +650,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
     mNavigationController = new NavigationController(
         this, v -> onSettingsOptionSelected(), v -> openVoiceInstructionsSettings(), this::updateBottomWidgetsOffset);
     mFreeDriveSpeedController = new FreeDriveSpeedController(findViewById(R.id.coordinator));
+    mMapNowPlayingController = new MapNowPlayingController(this, findViewById(R.id.coordinator));
     // TrafficManager.INSTANCE.attach(mNavigationController);
     initOnmapDownloader();
     initPositionChooser();
@@ -1090,6 +1093,8 @@ public class MwmActivity extends BaseMwmFragmentActivity
                            || (RoutingController.get().isNavigating() && Config.isKeepScreenOnInNavigationEnabled()),
                        getWindow());
     mNavigationController.onStart();
+    mMapNowPlayingController.setNavigating(RoutingController.get().isNavigating());
+    mMapNowPlayingController.onStart();
   }
 
   @Override
@@ -1097,6 +1102,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
   {
     super.onStop();
     mNavigationController.onStop();
+    mMapNowPlayingController.onStop();
 
     Framework.nativeRemovePlacePageActivationListener(this);
     BookmarkManager.INSTANCE.removeLoadingListener(this);
@@ -1363,6 +1369,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
     // TODO:
     // mPlacePage.refreshViews();
     mNavigationController.show(show);
+    mMapNowPlayingController.setNavigating(show);
     if (mOnmapDownloader != null)
       mOnmapDownloader.updateState(false);
   }

@@ -1,49 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Children hide themselves, so an empty panel takes no space. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/free_drive_speed"
-  android:layout_width="wrap_content"
+  android:id="@+id/free_drive_panel"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:gravity="center_vertical"
-  android:orientation="horizontal"
-  android:visibility="gone"
-  tools:visibility="visible">
+  android:orientation="horizontal">
 
   <LinearLayout
-    android:id="@+id/free_drive_speed_container"
+    android:id="@+id/free_drive_speed"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_half"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <LinearLayout
+      android:id="@+id/free_drive_speed_container"
+      android:layout_width="wrap_content"
+      android:layout_height="60dp"
+      android:background="@drawable/bg_free_drive_speed"
+      android:gravity="center"
+      android:minWidth="60dp"
+      android:orientation="vertical"
+      android:paddingHorizontal="@dimen/margin_half">
+
+      <TextView
+        android:id="@+id/free_drive_speed_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textAppearance="@style/MwmTextAppearance.NavMenu.Number"
+        tools:text="88" />
+
+      <TextView
+        android:id="@+id/free_drive_speed_units"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textAppearance="@style/MwmTextAppearance.NavMenu.Number.Dimension"
+        tools:text="km/h" />
+    </LinearLayout>
+
+    <app.organicmaps.sdk.widgets.speedlimit.SpeedLimitView
+      android:id="@+id/free_drive_speed_limit"
+      style="@style/MwmWidget.SpeedLimit"
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+      android:layout_marginStart="@dimen/margin_half"
+      android:visibility="gone"
+      tools:visibility="visible" />
+  </LinearLayout>
+
+  <TextView
+    android:id="@+id/free_drive_now_playing"
     android:layout_width="wrap_content"
     android:layout_height="60dp"
     android:background="@drawable/bg_free_drive_speed"
-    android:gravity="center"
-    android:minWidth="60dp"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/margin_half">
-
-    <TextView
-      android:id="@+id/free_drive_speed_value"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:includeFontPadding="false"
-      android:lines="1"
-      android:textAppearance="@style/MwmTextAppearance.NavMenu.Number"
-      tools:text="88" />
-
-    <TextView
-      android:id="@+id/free_drive_speed_units"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:includeFontPadding="false"
-      android:lines="1"
-      android:textAppearance="@style/MwmTextAppearance.NavMenu.Number.Dimension"
-      tools:text="km/h" />
-  </LinearLayout>
-
-  <app.organicmaps.sdk.widgets.speedlimit.SpeedLimitView
-    android:id="@+id/free_drive_speed_limit"
-    style="@style/MwmWidget.SpeedLimit"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_marginStart="@dimen/margin_half"
+    android:drawablePadding="@dimen/margin_quarter"
+    android:ellipsize="end"
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:paddingHorizontal="@dimen/margin_half"
+    android:textAppearance="@style/MwmTextAppearance.Body2"
     android:visibility="gone"
+    app:drawableStartCompat="@drawable/ic_music_note"
+    app:drawableTint="?iconTint"
+    tools:text="Bohemian Rhapsody — Queen"
     tools:visibility="visible" />
 </LinearLayout>

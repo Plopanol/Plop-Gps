@@ -37519,11 +37519,11 @@ it = Mostra la musica in riproduzione
 [enable_now_playing_description]
 comment = Description in preferences
 tags = android-app
-en = Shows the title of the track played by another app during navigation.
-de = Zeigt während der Navigation den Titel des von einer anderen App abgespielten Musikstücks an.
-es = Muestra el título de la canción que reproduce otra aplicación durante la navegación.
-fr = Affiche le titre du morceau joué par une autre application pendant la navigation.
-it = Mostra il titolo del brano riprodotto da un'altra app durante la navigazione.
+en = Shows on the map the title of the track played by another app.
+de = Zeigt auf der Karte den Titel des von einer anderen App abgespielten Musikstücks an.
+es = Muestra en el mapa el título de la canción que reproduce otra aplicación.
+fr = Affiche sur la carte le titre du morceau joué par une autre application.
+it = Mostra sulla mappa il titolo del brano riprodotto da un'altra app.
 
 [now_playing_permission_required]
 comment = Preference summary when notification access needed to read the playing track is not granted

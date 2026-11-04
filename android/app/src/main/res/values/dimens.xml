@@ -113,6 +113,8 @@
   <dimen name="elevation_profile_separator_gap">4dp</dimen>
   <dimen name="elevation_profile_marker_width">25dp</dimen>
   <dimen name="map_button_size">48dp</dimen>
+  <!-- Keeps the free drive panel clear of the right map buttons: button + paddings + gap. -->
+  <dimen name="free_drive_panel_end_margin">72dp</dimen>
   <dimen name="map_button_icon_size">32dp</dimen>
   <dimen name="map_button_arrow_icon_size">34dp</dimen>
 
