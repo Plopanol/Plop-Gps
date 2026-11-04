@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +33,7 @@ import app.organicmaps.sdk.maplayer.traffic.TrafficManager;
 import app.organicmaps.sdk.routing.RoutingController;
 import app.organicmaps.sdk.util.Config;
 import app.organicmaps.search.SearchPageViewModel;
-import app.organicmaps.util.ThemeUtils;
 import app.organicmaps.util.UiUtils;
-import app.organicmaps.util.Utils;
 import app.organicmaps.util.WindowInsetUtils;
 import app.organicmaps.widget.menu.MyPositionButton;
 import app.organicmaps.widget.placepage.PlacePageViewModel;
@@ -108,7 +105,6 @@ public class MapButtonsController extends Fragment
     mInnerRightButtonsFrame = mFrame.findViewById(R.id.map_buttons_inner_right);
     mBottomButtonsFrame = mFrame.findViewById(R.id.map_buttons_bottom);
 
-    final FloatingActionButton helpButton = mFrame.findViewById(R.id.help_button);
     final View zoomFrame = mFrame.findViewById(R.id.zoom_buttons_container);
     mFrame.findViewById(R.id.nav_zoom_in)
         .setOnClickListener((v) -> mMapButtonClickListener.onMapButtonClick(MapButtons.zoomIn));
@@ -148,8 +144,6 @@ public class MapButtonsController extends Fragment
         }
       });
     }
-    if (helpButton != null)
-      helpButton.setOnClickListener((v) -> mMapButtonClickListener.onMapButtonClick(MapButtons.help));
 
     mSearchWheel =
         new SearchWheel(mFrame,
@@ -171,8 +165,6 @@ public class MapButtonsController extends Fragment
       mButtonsMap.put(MapButtons.toggleMapLayer, mToggleMapLayerButton);
     if (menuButton != null)
       mButtonsMap.put(MapButtons.menu, menuButton);
-    if (helpButton != null)
-      mButtonsMap.put(MapButtons.help, helpButton);
     if (mTrackRecordingStatusButton != null)
       mButtonsMap.put(MapButtons.trackRecordingStatus, mTrackRecordingStatusButton);
     showButton(false, MapButtons.trackRecordingStatus);
@@ -290,31 +282,6 @@ public class MapButtonsController extends Fragment
     BadgeUtils.attachBadgeDrawable(mBadgeDrawable, menuButton);
 
     updateMenuBadge(TrackRecorder.nativeIsTrackRecordingEnabled());
-  }
-
-  public void updateHelpButtonIcon()
-  {
-    final View view = mButtonsMap.get(MapButtons.help);
-    if (!(view instanceof FloatingActionButton helpButton))
-      return;
-
-    if (Framework.nativeCanShowCrowdfundingPromo() && !TextUtils.isEmpty(Utils.getDonateUrl(requireContext())))
-    {
-      helpButton.setImageResource(R.drawable.ic_crowdfunding);
-      helpButton.getDrawable().setTintList(null);
-    }
-    else if (Config.isNY() && !TextUtils.isEmpty(Utils.getDonateUrl(requireContext())))
-    {
-      helpButton.setImageResource(R.drawable.ic_christmas_tree);
-      helpButton.getDrawable().setTintList(null);
-    }
-    else
-    {
-      helpButton.setImageResource(app.organicmaps.branding.R.drawable.logo);
-      // Keep this button colorful in normal theme.
-      if (!ThemeUtils.isDarkTheme(requireContext()))
-        helpButton.getDrawable().setTintList(null);
-    }
   }
 
   public void updateLayerButton()
@@ -486,7 +453,6 @@ public class MapButtonsController extends Fragment
       mSearchWheel.onResume();
     updateMenuBadge();
     updateLayerButton();
-    updateHelpButtonIcon();
   }
 
   @Override
@@ -523,7 +489,6 @@ public class MapButtonsController extends Fragment
     search,
     bookmarks,
     menu,
-    help,
     trackRecordingStatus
   }
 
