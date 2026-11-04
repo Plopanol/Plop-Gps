@@ -805,7 +805,7 @@
     <!-- Preference to show the currently playing music track during navigation -->
     <string name="enable_now_playing">Laufende Musik anzeigen</string>
     <!-- Description in preferences -->
-    <string name="enable_now_playing_description">Zeigt während der Navigation den Titel des von einer anderen App abgespielten Musikstücks an.</string>
+    <string name="enable_now_playing_description">Zeigt auf der Karte den Titel des von einer anderen App abgespielten Musikstücks an.</string>
     <!-- Preference summary when notification access needed to read the playing track is not granted -->
     <string name="now_playing_permission_required">Zugriff auf Benachrichtigungen erforderlich. Tippen, um ihn zu erteilen.</string>
     <!-- A preference title; keep short! -->

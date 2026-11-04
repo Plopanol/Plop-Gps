@@ -809,7 +809,7 @@
     <!-- Preference to show the currently playing music track during navigation -->
     <string name="enable_now_playing">Mostra la musica in riproduzione</string>
     <!-- Description in preferences -->
-    <string name="enable_now_playing_description">Mostra il titolo del brano riprodotto da un\'altra app durante la navigazione.</string>
+    <string name="enable_now_playing_description">Mostra sulla mappa il titolo del brano riprodotto da un\'altra app.</string>
     <!-- Preference summary when notification access needed to read the playing track is not granted -->
     <string name="now_playing_permission_required">È necessario l\'accesso alle notifiche. Tocca per concederlo.</string>
     <!-- A preference title; keep short! -->
