@@ -1,0 +1,56 @@
+#!/bin/sh
+# Fork-specific pre-push hook (core.hooksPath = .githooks).
+# Checks only the commits being pushed (not the upstream Organic Maps history) against the local
+# forbidden list .publication-interdits.txt, kept outside any repository in the parent folder.
+# Values are never printed. Git's own bypass: git push --no-verify.
+
+root=$(git rev-parse --show-toplevel 2>/dev/null) || { echo "pre-push: not inside a Git repository" >&2; exit 1; }
+cd "$root" || exit 1
+trap "" PIPE
+
+list=""
+for f in "$root/.publication-interdits.txt" "$(dirname "$root")/.publication-interdits.txt"; do
+    if [ -f "$f" ]; then list=$f; break; fi
+done
+if [ -z "$list" ]; then
+    echo "pre-push: .publication-interdits.txt not found in the repository or its parent folder; push refused" >&2
+    exit 1
+fi
+
+patterns=$(mktemp) || exit 1
+trap 'rm -f "$patterns"' EXIT
+# Comments, blank lines and Windows line endings are not values. Both sides are lowercased because
+# Git for Windows' grep aborts on -i -F -f.
+tr -d '\r' < "$list" | grep -v -e '^[[:space:]]*#' -e '^[[:space:]]*$' | tr '[:upper:]' '[:lower:]' > "$patterns"
+[ -s "$patterns" ] || { echo "pre-push: the forbidden list is empty; push refused" >&2; exit 1; }
+
+zero=0000000000000000000000000000000000000000
+found=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+    # A branch deletion sends nothing.
+    [ "$local_sha" = "$zero" ] && continue
+    if [ "$remote_sha" = "$zero" ]; then
+        # New remote branch: only commits that no remote already has.
+        commits=$(git rev-list "$local_sha" --not --remotes)
+    else
+        commits=$(git rev-list "$remote_sha..$local_sha")
+    fi
+    for c in $commits; do
+        git show --no-color --format='%an <%ae>%n%cn <%ce>%n%B' "$c" | tr '[:upper:]' '[:lower:]' | grep -F -f "$patterns" > /dev/null
+        status=$?
+        if [ "$status" -eq 0 ]; then
+            echo "pre-push: commit $(git rev-parse --short "$c") ($local_ref) contains a forbidden value" >&2
+            found=1
+        elif [ "$status" -ne 1 ]; then
+            # A failed search must never pass for a clean commit.
+            echo "pre-push: search failed on commit $(git rev-parse --short "$c") (grep exit $status); push refused" >&2
+            found=1
+        fi
+    done
+done
+
+if [ "$found" -ne 0 ]; then
+    echo "pre-push: push refused; remove the value from these commits before pushing" >&2
+    exit 1
+fi
+exit 0
