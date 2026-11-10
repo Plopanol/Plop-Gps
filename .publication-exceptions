@@ -1,0 +1,17 @@
+# Exceptions qualifiées de Test-Publication.ps1 (modèle commun) : « motif de chemin | règle ».
+# Fork d'Organic Maps : ces correspondances viennent du code et des données amont, publics.
+# Courriels de contributeurs, de support et d'attribution de l'amont ; les adresses personnelles
+# restent détectées par la liste commune des valeurs interdites.
+* | courriel non générique
+# Chemins Unix, URL et adresses d'exemple des tests et outils amont.
+tools/python/* | dossier personnel Unix
+tools/python/* | URL avec identifiants
+libs/* | dossier personnel Unix
+libs/coding/coding_tests/* | URL avec identifiants
+libs/coding/coding_tests/* | adresse IPv4 privée
+generator/* | dossier personnel Unix
+data/copyright.html | dossier personnel Unix
+android/app/src/main/assets/copyright.html | dossier personnel Unix
+.github/workflows/* | dossier personnel Unix
+# Clé de débogage Android publique, versionnée par l'amont.
+android/app/debug.keystore | fichier sensible
